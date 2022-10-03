@@ -1,0 +1,12 @@
+<div class="container col col-12">
+    <div class="col col-sm-12 col-md-6 col-lg-4 card-container" [routerLink]="item.enlace" *ngFor="let item of elementos_tarjeta">
+        <div class="card">
+            <div class="top-row background-top-row">
+                <h2>{{ item.titulo }}</h2>
+            </div>
+            <div class="content">
+                <p>{{ item.descripcion }}</p>
+            </div>
+        </div>
+    </div>
+</div>
