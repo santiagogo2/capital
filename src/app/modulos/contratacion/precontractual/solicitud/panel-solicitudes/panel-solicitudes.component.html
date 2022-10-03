@@ -1,0 +1,56 @@
+<div class="text-center" *ngIf="!bandera_inicial">
+    <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="col-12 pr-0 pl-0" *ngIf="bandera_inicial">
+    <div class="backLink col col-sm-12">
+        <a class="col-sm-12" routerLink="../">Regresar</a>
+    </div>
+    <div class="col col-12 mt-2" *ngIf="mensaje_inicial">
+        <div class="alert alert-warning" role="alert">
+            {{ mensaje_inicial }}
+        </div>
+    </div>
+    <div class="card-body tableContainer" *ngIf="solicitudes">
+        <div class="table-responsive tableContainerAll">
+            <div class="paginationControls" *ngIf="solicitudes && solicitudes.length > items_por_pagina">
+                <pagination-controls (pageChange)="cambiarPagina($event)" previousLabel="Anterior" nextLabel="Siguiente" maxSize="4">
+                </pagination-controls>
+            </div>
+            <table class="table table-bordered">
+                <thead class="thead_styles">
+                    <tr>
+                        <th>ID</th>
+                        <th>Área solicitante</th>
+                        <th>Descripción de la solicitud</th>
+                        <th>Fecha solicitud</th>
+                        <th>Estado</th>
+                        <th>Fecha respuesta</th>
+                        <th>Fecha Presentación CC</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody_styles">
+                    <tr *ngFor="let solicitud of solicitudes | paginate: {itemsPerPage: items_por_pagina, currentPage: pagina_actual}" [ngClass]="{'death': solicitud.estado == 2, 'regular': solicitud.estado == 3, 'bad': solicitud.estado == 4, 'good': solicitud.estado == 6}">
+                        <td>{{ solicitud.id }}</td>
+                        <td>{{ solicitud.area_solicitante | global: 'areas_contratacion' }}</td>
+                        <td>{{ solicitud.descripcion_solicitud }}</td>
+                        <td>{{ solicitud.createdAt | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ solicitud.estado | global: 'estados_solicitud_precontractual' }}</td>
+                        <td *ngIf="solicitud.fecha_respuesta">{{ solicitud.fecha_respuesta | date: 'dd/MM/yyyy' }}</td>
+                        <td *ngIf="!solicitud.fecha_respuesta">-</td>
+                        <td *ngIf="solicitud.fecha_comite_contratacion">{{ solicitud.fecha_comite_contratacion | date: 'dd/MM/yyyy' }}</td>
+                        <td *ngIf="!solicitud.fecha_comite_contratacion">-</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info btn-circle btn-sm d-inline-block" title="Ver Más" [routerLink]="['../editar-solicitud/', solicitud.id]"><i class="fa fa-eye"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col col-12 text-right">
+        <button routerLink="../nueva-solicitud" type="button" class="btn btn-success btn-circle btn-lg" title="Nueva Solicitud"><i class="fa fa-plus"></i></button>
+    </div>
+</div>

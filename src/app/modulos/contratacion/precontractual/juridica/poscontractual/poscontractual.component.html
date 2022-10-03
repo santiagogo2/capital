@@ -1,0 +1,89 @@
+<div class="text-center" *ngIf="!bandera_inicial">
+    <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="col-12 pr-0 pl-0" *ngIf="bandera_inicial">
+    <div class="backLink col col-sm-12">
+        <a class="col-sm-12" routerLink="../../panel-juridica">Regresar</a>
+    </div>
+    <div class="col col-12 mt-2" *ngIf="mensaje_inicial">
+        <div class="alert alert-warning" role="alert">
+            {{ mensaje_inicial }}
+        </div>
+    </div>
+
+    <div class="tableContainer" *ngIf="solicitud">
+        <div class="table-responsive tableContainerAll">
+            <table class="table table-bordered">
+                <thead class="thead_styles">
+                    <tr>
+                        <th>Documento Adjunto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody_styles">
+                    <ng-container *ngFor="let item of global.tipos_documentos; let i = index">
+                        <tr *ngIf="item.id >= 39 && item.id <= 43">
+                            <td>{{ item.value }}<span class="required" *ngIf="item.required">*</span></td>
+                            <td>
+                                <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true); else elseDocumento">
+                                    <button type="button" class="btn btn-success btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( _precontractual_functions_services.validarDocumento( solicitud, item.id ) )"><i class="fa fa-check"></i></button>
+                                </ng-container>
+                                <ng-template #elseDocumento>
+                                    <i *ngIf="item.required; else elseValidarDocumento" class="fa fa-times" style="color: red; font-size: 1rem"></i>
+                                    <ng-template #elseValidarDocumento>-</ng-template>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col col-12 text-right">
+        <button type="button" data-toggle="modal" [attr.data-target]="'#agregarDocumentoModal'" class="btn btn-info btn-circle btn-lg" title="Agregar Documento"><i class="fa fa-upload"></i></button>
+    </div>
+</div>
+
+<!-- Modal que le permite al usuario agregar un nuevo documento según la selección realizada -->
+<div class="modal animated fadeIn faster" id="agregarDocumentoModal" *ngIf="documentacion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #agregarDocumentoForm="ngForm" class="form-container" (ngSubmit)="cargarDocumentoRequerido(documento_a_cargar, documentacion.id_documento)">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Documento a la Solicitud</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col col-sm-12">
+                            <label for="descripcion" class="control-label labelForm">Seleccione el documento<span class="required">*</span></label>
+                            <select id="estado_documento" name="estado_documento" class="form-control inputForm custom-select" [(ngModel)]="documentacion.id_documento">
+								<ng-container *ngFor="let item of global.tipos_documentos">
+									<option *ngIf="item.id >= 39 && item.id <= 43" value="{{ item.id }}">{{ item.value }}</option>
+								</ng-container>
+							</select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col col-sm-12">
+                            <label for="descripcion" class="control-label labelForm">Documento adjunto<span class="required">*</span></label>
+                            <input type="file" class="form-control inputForm mt-2" id="documento_2" accept="application/pdf" (change)="documento_a_cargar = $event.target.files[0]" required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col col-sm-12 text-right">
+                        <button type="submit" class="btn btn-success" [disabled]="agregarDocumentoForm.invalid || !documento_a_cargar" (click)="cargarDocumentoRequerido(documento_a_cargar, documentacion.id_documento)" data-dismiss="modal"> <i class="fa fa-check"></i> Adjuntar Documento</button>
+                        <button type="button" class="btn btn-inverse ml-2" data-dismiss="modal" (click)="configurarInformacionInicial()">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

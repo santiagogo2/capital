@@ -1,0 +1,119 @@
+<div class="text-center" *ngIf="!bandera_inicial">
+    <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="col-lg-12 pr-0 pl-0" *ngIf="bandera_inicial">
+    <div class="backLink col col-sm-12">
+        <a class="col-sm-12" routerLink="/contratacion/precontractual/panel-solicitudes">Regresar</a>
+    </div>
+    <div class="formContainer">
+        <div class="col col-12 mt-2" *ngIf="mensaje_inicial">
+            <div class="alert alert-warning" role="alert">
+                {{ mensaje_inicial }}
+            </div>
+        </div>
+        <form #solicitudForm="ngForm" (ngSubmit)="onSubmit(solicitudForm)" *ngIf="solicitud">
+            <div class="form-body">
+                <h3 class="subtitle">Datos del Solicitante</h3>
+                <div class="form-group">
+                    <div class="col col-sm-12 col-md-3 d-inline-block">
+                        <label for="primer_nombre" class="control-label labelForm">Primer Nombre<span class="required">*</span></label>
+                        <input type="text" id="primer_nombre" name="primer_nombre" maxlength="60" class="form-control inputForm" [ngClass]="{ 'is-invalid': primer_nombre.invalid }" #primer_nombre="ngModel" [(ngModel)]="solicitud.primer_nombre" (ngModelChange)="solicitud.primer_nombre=_global_service.upperCase($event)"
+                            pattern="[a-zA-ZÀ-ÿ ]+" required [disabled]="bandera_disabled">
+                    </div>
+                    <div class="col col-sm-12 col-md-3 d-inline-block">
+                        <label for="segundo_nombre" class="control-label labelForm">Segundo Nombre</label>
+                        <input type="text" id="segundo_nombre" name="segundo_nombre" maxlength="60" class="form-control inputForm" [ngClass]="{ 'is-invalid': segundo_nombre.invalid }" #segundo_nombre="ngModel" [(ngModel)]="solicitud.segundo_nombre" (ngModelChange)="solicitud.segundo_nombre=_global_service.upperCase($event)"
+                            pattern="[a-zA-ZÀ-ÿ ]+" [disabled]="bandera_disabled">
+                    </div>
+                    <div class="col col-sm-12 col-md-3 d-inline-block">
+                        <label for="primer_apellido" class="control-label labelForm">Primer Apellido<span class="required">*</span></label>
+                        <input type="text" id="primer_apellido" name="primer_apellido" maxlength="60" class="form-control inputForm" [ngClass]="{ 'is-invalid': primer_apellido.invalid }" #primer_apellido="ngModel" [(ngModel)]="solicitud.primer_apellido" (ngModelChange)="solicitud.primer_apellido=_global_service.upperCase($event)"
+                            pattern="[a-zA-ZÀ-ÿ ]+" required [disabled]="bandera_disabled">
+                    </div>
+                    <div class="col col-sm-12 col-md-3 d-inline-block">
+                        <label for="segundo_apellido" class="control-label labelForm">Segundo Apellido</label>
+                        <input type="text" id="segundo_apellido" name="segundo_apellido" maxlength="60" class="form-control inputForm" [ngClass]="{ 'is-invalid': segundo_apellido.invalid }" #segundo_apellido="ngModel" [(ngModel)]="solicitud.segundo_apellido" (ngModelChange)="solicitud.segundo_apellido=_global_service.upperCase($event)"
+                            pattern="[a-zA-ZÀ-ÿ ]+" [disabled]="bandera_disabled">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col col-sm-12 col-md-6 d-inline-block">
+                        <label for="cargo" class="control-label labelForm">Cargo<span class="required">*</span></label>
+                        <input type="text" id="cargo" name="cargo" maxlength="60" class="form-control inputForm" [ngClass]="{ 'is-invalid': cargo.invalid }" #cargo="ngModel" [(ngModel)]="solicitud.cargo" (ngModelChange)="solicitud.cargo=_global_service.upperCase($event)" required
+                            [disabled]="bandera_disabled">
+                    </div>
+                    <div class="col col-sm-12 col-md-6 d-inline-block">
+                        <label for="area_solicitante" class="control-label labelForm">Área<span class="required">*</span></label>
+                        <select id="area_solicitante" name="area_solicitante" class="form-control inputForm custom-select" [ngClass]="{ 'is-invalid': area_solicitante.invalid }" #area_solicitante="ngModel" [(ngModel)]="solicitud.area_solicitante" required [disabled]="bandera_disabled">
+							<option *ngFor="let area of global.areas_contratacion" value="{{ area.id }}">{{ area.value }}</option>
+						</select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col d-inline-block" [ngClass]="{ 'col-sm-6': bandera_disabled, 'col-sm-12': !bandera_disabled }">
+                        <label for="correo_electronico" class="control-label labelForm">Correo electrónico<span class="required">*</span></label>
+                        <input type="text" id="correo_electronico" name="correo_electronico" maxlength="255" class="form-control inputForm" [ngClass]="{ 'is-invalid': correo_electronico.invalid }" #correo_electronico="ngModel" [(ngModel)]="solicitud.correo_electronico" placeholder="ejemplo@capitalsalud.gov.co"
+                            pattern="[a-z0-9._%+-]+@capitalsalud.gov.co" required [disabled]="bandera_disabled">
+                    </div>
+                    <div class="col col-sm-6 d-inline-block" *ngIf="bandera_disabled">
+                        <label class="control-label labelForm">Seleccione el típo de contrato<span class="required">*</span></label>
+                        <input type="text" id="tipo_contrato" name="tipo_contrato" class="form-control inputForm" value="{{ solicitud.tipo_contrato | global: 'tipos_contratos' }}" disabled>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="!bandera_disabled">
+                    <div class="col col-12">
+                        <label class="control-label labelForm">Seleccione el típo de contrato<span class="required">*</span></label>
+                        <div class="form-check">
+                            <label class="custom-control custom-radio" *ngFor="let item of global.tipos_contratos">
+								<input id="{{ item.value }}" [checked]="solicitud.tipo_contrato == item.id" name="tipo_contrato" type="radio" value="{{ item.id }}" class="custom-control-input" #tipo_contrato="ngModel" [(ngModel)]="solicitud.tipo_contrato" [disabled]="bandera_disabled">
+								<span class="custom-control-indicator"></span>
+								<span class="custom-control-description">{{ item.value }}</span>
+							</label>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="subtitle">Descripción<span class="required">*</span></h3>
+                <div class="form-group">
+                    <div class="col col-sm-12">
+                        <textarea name="descripcion_solicitud" id="descripcion_solicitud" rows="3" minlength="15" maxlength="100" class="form-control inputForm" [ngClass]="{ 'is-invalid': descripcion_solicitud.invalid }" #descripcion_solicitud="ngModel" [(ngModel)]="solicitud.descripcion_solicitud"
+                            placeholder="Diligencia la solicitud (máximo 100 caracteres)" required [disabled]="bandera_disabled"></textarea>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="solicitud.tipo_contrato && !bandera_disabled">
+                    <div class="col col-sm-12" *ngIf="solicitud.tipo_contrato == 1">
+                        <a href="#" class="btn waves-effect waves-light btn-rounded btn-sm btn-info">F62 – LJ Formato Informe Previo Administrativo para Comité de Contratación</a>
+                    </div>
+                    <div class="col col-sm-12" *ngIf="solicitud.tipo_contrato == 2">
+                        <a href="#" class="btn waves-effect waves-light btn-rounded btn-sm btn-info">F64 – LJ Formato Informe Previo Asistencial para Comité de Contratación</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col col-12">
+                        <label for="documento_adjunto" class="control-label labelForm">Documento Adjunto<span class="required">*</span></label>
+                        <input type="file" class="form-control inputForm" id="documento_adjunto" accept="application/pdf" (change)="cambiarDocumento( $event.target.files[0] )" *ngIf="!bandera_disabled || solicitud.estado == 4" />
+                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="descargarDocumento()" *ngIf="!documento_adjunto && solicitud.documento_adjunto">{{ solicitud.documento_adjunto }}</button>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="solicitud.observaciones_juridica">
+                    <div class="col col-12">
+                        <label for="documento_adjunto" class="control-label labelForm" *ngIf="solicitud.estado == 4">Observaciones</label>
+                        <textarea name="observaciones" id="observaciones" rows="3" class="form-control inputForm" disabled>{{ solicitud.observaciones_juridica }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions" *ngIf="!bandera_disabled || solicitud.estado == 4">
+                <div class="col col-sm-12 text-right">
+                    <button type="submit" class="btn btn-success" [disabled]="solicitudForm.invalid || solicitud.tipo_contrato == null || solicitud.tipo_contrato == undefined || (!documento_adjunto && !solicitud.documento_adjunto)"> <i class="fa fa-check"></i> Enviar</button>
+                    <button type="button" class="btn btn-inverse ml-2" (click)="cancelarSolicitud()">Cancelar</button>
+                </div>
+            </div>
+        </form>
+
+        <ng-container *ngIf="solicitud.estado == 6 || solicitud.estado == 7">
+            <app-agregar-documentos [solicitud]="solicitud"></app-agregar-documentos>
+        </ng-container>
+    </div>
+</div>

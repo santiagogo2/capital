@@ -1,1 +1,251 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+}
+
+.backLink {
+    text-align: left;
+    padding: 0 !important;
+    font-size: 0.9rem;
+}
+
+.btn-circle.btn-sm {
+    width: 30px;
+    height: 30px;
+    padding: 5px 7px;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.formContainer {
+    padding: 1rem 0;
+}
+
+.required {
+    color: red;
+    font-weight: bold;
+}
+
+.subtitle {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem 1rem 0.3rem;
+    color: #6B006B;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1.2px solid #6B006B;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.infoNote {
+    color: #004993;
+    text-align: left;
+    margin-bottom: 0.3rem;
+}
+
+.infoNote small {
+    font-weight: 700 !important;
+}
+
+
+/*---------------------------------------------
+ Pagination Control Styles
+---------------------------------------------*/
+
+.paginationControls {
+    text-align: right;
+}
+
+.paginationControls .current {
+    background: #3F9AE8 !important;
+    border-color: #3F9AE8 !important;
+    color: #F2F2F2 !important;
+}
+
+.paginationControls li {
+    font-size: 12px;
+    border-radius: 3px !important;
+    border: 1px solid #A6A6A6;
+    color: #606060 !important;
+}
+
+.paginationControls a {
+    color: #3C3C3C !important;
+    text-decoration: none !important;
+}
+
+.paginationControls a,
+.paginationControls .current,
+.paginationControls .disabled {
+    padding: 0.2rem 0.55rem !important;
+}
+
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after,
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before {
+    content: '' !important;
+    display: none !important;
+    margin: 0 !important;
+}
+
+
+/*---------------------------------------------
+ Loaders
+---------------------------------------------*/
+
+
+/* .deleteLoader {
+    width: fit-content;
+    margin: auto;
+}
+
+.loader {
+    border: 3.5px solid #E1E1E1;
+    border-radius: 50%;
+    border-top: 3.5px solid #343a40;
+    width: 35px;
+    height: 35px;
+    -webkit-animation: spin 0.7s linear infinite;
+    -moz-animation: spin 0.7s linear infinite;
+    -ms-animation: spin 0.7s linear infinite;
+    -o-animation: spin 0.7s linear infinite;
+    animation: spin 0.7s linear infinite;
+} */
+
+.bad {
+    background-color: #D23C4A !important;
+    color: #FFF;
+}
+
+.bad td,
+.bad td a {
+    color: #FFF !important;
+}
+
+.good {
+    background-color: #58AD58 !important;
+    color: #FFF;
+}
+
+.good td,
+.good td a {
+    color: #FFF !important;
+}
+
+.regular {
+    background-color: #856404 !important;
+    color: #FFF;
+}
+
+.regular td,
+.regular td a {
+    color: #FFF !important;
+}
+
+.death {
+    background-color: #464646 !important;
+    color: #FFF;
+}
+
+.death td,
+.death td a {
+    color: #FFF !important;
+}
+
+
+/*---------------------------------------------
+	Estilos de las tablas del aplicativo
+	Se ajustan para permitir una mejor visualización de los elementos
+---------------------------------------------*/
+
+.tableContainer {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.tableContainer::-webkit-scrollbar {
+    height: 4px;
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+    background: #343A40;
+}
+
+.tableContainerAll {
+    overflow-x: auto;
+    padding: 0 !important;
+}
+
+.thead_styles {
+    background-color: #263B82;
+    color: #F7F7F7;
+    text-align: center;
+}
+
+.thead_styles th {
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.9rem 0.75rem !important;
+    text-align: center;
+}
+
+.tbody_styles {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.tableStyles {
+    cursor: pointer !important;
+}
+
+.tbody_styles td {
+    padding: .55rem !important;
+    vertical-align: middle;
+    color: #3C3535;
+}
+
+.tbody_styles tr:nth-child(even) {
+    background-color: #F1F1F1;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.table thead th {
+    vertical-align: middle !important;
+}
+
+.table tbody tr:hover {
+    background-color: #919191;
+    color: #F7F7F7 !important;
+}
+
+.table tbody tr:hover td {
+    color: #F7F7F7 !important;
+}
+
+.table-bordered th {
+    border: 1px solid #e9ecef !important;
+}
+
+.table-bordered td {
+    border: 1px solid #DEE2E6 !important;
+}
+
+
+/*---------------------------------------------
+	Estilos de los formularios
+---------------------------------------------*/
+
+.labelForm {
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+    text-align: left;
+}
+
+.inputForm {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.85rem !important;
+}

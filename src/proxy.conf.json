@@ -1,0 +1,8 @@
+{
+    "/api/interop": {
+        "target": "https://paiwscc.sispropreprod.gov.co:8082",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}

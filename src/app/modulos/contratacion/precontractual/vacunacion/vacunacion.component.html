@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card border-0">
+            <div class="card-body cardContainer">
+                <div class="formContainer">
+                    <div class="backLink col col-12 d-inline-block">
+                        <a class="col-sm-6" routerLink="..">Regresar</a>
+                    </div>
+                    <ng-container *ngIf="bandera_inicial">
+                        <div class="infoParagraph col col-12">
+                            <p><b>Para realizar el cargue masivo de contratistas debe subir un archivo de excel con los siguientes indices o cabeceras en la primera fila del documento:</b></p>
+                            <ul>
+                                <li>TipoDocumento</li>
+                                <li>NroDocumento</li>
+                                <li>PrimerNombre</li>
+                                <li>PrimerApellido</li>
+                                <li>FechaNacimiento</li>
+                                <li>Sexo</li>
+                                <li>CodigoVacuna</li>
+                                <li>NroDosis</li>
+                                <li>TipoEsquema</li>
+                                <li>CodigoEstrategia</li>
+                                <li>FechaAplicacion</li>
+                                <li>CorreoElectronico</li>
+                            </ul>
+                        </div>
+                        <div class="col col-sm-12 form-group text-left">
+                            <input type="file" class="inputForm d-inline-block" (change)="agregarArchivo($event)" placeholder="upload file" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1rem">
+                            <div class="col col-sm-12 buttonSubmit">
+                                <input type="submit" value="Registrar Información" class="btn btn-success btnPrefer col-sm-12" [disabled]="!datos_vacunacion || datos_vacunacion.length == 0" (click)="registrarDatos()">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 1rem" *ngIf="preloader_status">
+                            <div class="col col-sm-12 buttonSubmit">
+                                <small class="warning-feedback">Resolviendo...</small>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div class="col col-12 mt-2" *ngIf="mensaje_respuesta">
+                        <div class="alert alert-warning" role="alert">
+                            {{ mensaje_respuesta }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

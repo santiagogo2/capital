@@ -1,16 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
+// Modulos
+import { AppRoutingModule } from './app-routing.module';
+import { ModulosModule } from './modulos/modulos.module';
+
+// Componentes
 import { AppComponent } from './app.component';
 
+// Servicios
+import { InterceptorService } from './interceptors/interceptor.service';
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+	],
+	imports: [
+		BrowserModule,
+		FormsModule,
+		HttpClientModule,
+		ModulosModule,
+		AppRoutingModule,
+	],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptorService,
+			multi: true,
+		}
+	],
+	bootstrap: [ AppComponent ]
 })
 export class AppModule { }
