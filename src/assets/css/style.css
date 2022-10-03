@@ -1357,9 +1357,9 @@ File: scss
     background: #f4f6f9;
     padding-bottom: 60px;
     position: relative;
-    -webkit-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 .page-wrapper.active {
@@ -1395,9 +1395,9 @@ File: scss
     left: 78px;
     -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-    -webkit-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 .fix-header .topbar.active {
