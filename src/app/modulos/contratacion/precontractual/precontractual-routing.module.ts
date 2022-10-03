@@ -25,8 +25,8 @@ const precontractualRoutes: Routes = [
 	{ path: 'aprobacion-juridica/:id', component: AprobacionJuridicaComponent, data: { titulo: 'Contratación Precontractual - Aprobación Jurídica' } },
 	{ path: 'vacunacion', component: VacunacionComponent, data: { titulo: 'Vacunación Ministerio' } },
 
-	{ path: 'panel-presupuesto', component: PanelPresupuestoComponent, data: { titulo: 'Contratación Precontractual - Panel Presupuesto'} },
-	{ path: 'aprobacion-presupuesto/:id', component: AprobacionPresupuestoComponent, data: { titulo: 'Contratación Precontractual - Aprobación Presupuesto' } },
+	{ path: 'panel-financiera', component: PanelPresupuestoComponent, data: { titulo: 'Contratación Precontractual - Panel Presupuesto'} },
+	{ path: 'aprobacion-financiera/:id', component: AprobacionPresupuestoComponent, data: { titulo: 'Contratación Precontractual - Aprobación Presupuesto' } },
 	{ path: 'documentacion-postcontractual/:id', component: PoscontractualComponent, data: { titulo: 'Contratación Precontractual - Documentación Postcontractual' } },
 ];
 

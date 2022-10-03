@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class PrecontractualComponent implements OnInit {
+	show: boolean;
 
-  constructor() { }
+	elementos_tarjeta: any[] = [
+		{ titulo: 'Solicitudes', descripcion: 'Prueba de la descripción', enlace: 'panel-solicitudes' },
+		{ titulo: 'Jurídica', descripcion: 'Prueba de la descripción', enlace: 'panel-juridica' },
+		{ titulo: 'Financiera', descripcion: 'Prueba de la descripción', enlace: 'panel-financiera' },
+	];
 
-  ngOnInit(): void {
-  }
-
+	constructor() {}
+	
+	ngOnInit(): void {
+	}
 }

@@ -92,12 +92,12 @@ export var global = {
 		{ id: 31, value: 'Aprobación de Garantías', required: true },
 		{ id: 32, value: 'Designación de Supervisión', required: true },
 		{ id: 33, value: 'Publicación SECOP I Estado Celebrado', required: true },
-		{ id: 34, value: 'Informes de Supervisión', required: true },
-		{ id: 35, value: 'Justificación OtroSi', required: false },
-		{ id: 36, value: 'Minuta Modificaciones', required: true },
-		{ id: 37, value: 'Anexos', required: false },
-		{ id: 38, value: 'Certificado de Registro Presupuestal CRP', required: true },
-
+		{ id: 34, value: 'Anexos', required: false },
+		{ id: 35, value: 'Certificado de Registro Presupuestal CRP', required: true },
+		
+		{ id: 36, value: 'Informes de Supervisión', required: true },
+		{ id: 37, value: 'Justificación OtroSi', required: false },
+		{ id: 38, value: 'Minuta Modificaciones', required: true },
 		{ id: 39, value: 'Memorando Solicitud Liquidación', required: true },
 		{ id: 40, value: 'Informe Final Supervisor', required: true },
 		{ id: 41, value: 'Certificado DAF', required: true },

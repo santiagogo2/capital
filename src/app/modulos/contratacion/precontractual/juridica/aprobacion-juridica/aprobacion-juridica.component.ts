@@ -36,7 +36,7 @@ export class AprobacionJuridicaComponent implements OnInit {
 		private _file_upload_service: FileUploadService,
 		public _global_service: GlobalService,
 		public _precontractual_functions_services: PrecontractualFunctionsService,
-		private _precontractual_service: PrecontractualService,
+		public _precontractual_service: PrecontractualService,
 		private _presupuesto_service: PresupuestoService,
 		private _route: ActivatedRoute,
 		private _router: Router,
@@ -357,6 +357,7 @@ export class AprobacionJuridicaComponent implements OnInit {
 	 * @returns 
 	*/
 	validarDocumentosAprovados() {
+		console.log(this.solicitud)
 		if( this.solicitud.documentos && this.solicitud.documentos.length > 0 ) {
 			let bandera = true;
 			const documentos_requeridos = this.validarDocumentacionCompleta();
@@ -367,16 +368,26 @@ export class AprobacionJuridicaComponent implements OnInit {
 				}
 			});
 			if( bandera ) {
-				documentos_requeridos.forEach( element => {
-					let flag = false;
-					this.solicitud.documentos.forEach( documento => {
-						if( element.id == documento.id_documento ) {
-							flag = true;
-						}
-					});
-					bandera = !flag ? flag : bandera;
+				let flag = false;
+				this.solicitud.presupuesto.forEach( element => {
+					if( element.tipo_certificado == 1 && element.estado == 2 ) {
+						flag = true;
+					}
 				});
-				return bandera;
+				if( flag ) {
+					documentos_requeridos.forEach( element => {
+						let flag = false;
+						this.solicitud.documentos.forEach( documento => {
+							if( element.id == documento.id_documento ) {
+								flag = true;
+							}
+						});
+						bandera = !flag ? flag : bandera;
+					});
+					return bandera;
+				} else {
+					return false;
+				}
 			} else {
 				return false;
 			}	

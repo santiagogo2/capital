@@ -24,7 +24,7 @@
                 </thead>
                 <tbody class="tbody_styles">
                     <ng-container *ngFor="let item of global.tipos_documentos; let i = index">
-                        <tr *ngIf="item.id >= 39 && item.id <= 43">
+                        <tr *ngIf="item.id >= 36 && item.id <= 43">
                             <td>{{ item.value }}<span class="required" *ngIf="item.required">*</span></td>
                             <td>
                                 <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true); else elseDocumento">
@@ -64,7 +64,7 @@
                             <label for="descripcion" class="control-label labelForm">Seleccione el documento<span class="required">*</span></label>
                             <select id="estado_documento" name="estado_documento" class="form-control inputForm custom-select" [(ngModel)]="documentacion.id_documento">
 								<ng-container *ngFor="let item of global.tipos_documentos">
-									<option *ngIf="item.id >= 39 && item.id <= 43" value="{{ item.id }}">{{ item.value }}</option>
+									<option *ngIf="item.id >= 36 && item.id <= 43" value="{{ item.id }}">{{ item.value }}</option>
 								</ng-container>
 							</select>
                         </div>

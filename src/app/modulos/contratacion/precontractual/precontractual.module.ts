@@ -6,6 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 // Modulos
 import { PrecontractualRoutingModule } from './precontractual-routing.module';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { SharedModule } from '../../../shared/shared.module';
 
 // Componentes
 import { EditarSolicitudComponent } from './solicitud/editar-solicitud/editar-solicitud.component';
@@ -40,6 +41,7 @@ import { PoscontractualComponent } from './juridica/poscontractual/poscontractua
 		PrecontractualRoutingModule,
 		FormsModule,
 		PipesModule,
+		SharedModule,
 	]
 })
 export class PrecontractualModule { }

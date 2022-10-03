@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { SolicitudPrecontractual } from '../../models/precontractual-models.index';
 
 // Servicios
-import { PrecontractualService } from '../../services/precontractual.services.index';
+import { global } from 'src/app/services/services.index';
+import { PrecontractualService, PrecontractualFunctionsService } from '../../services/precontractual.services.index';
 
 @Component({
 	selector: 'app-panel-juridica',
@@ -13,12 +14,14 @@ import { PrecontractualService } from '../../services/precontractual.services.in
 })
 export class PanelJuridicaComponent implements OnInit {
 	bandera_inicial: boolean = false;
+	global = global;
 	items_por_pagina: number = 20;
 	mensaje_inicial: boolean;
 	pagina_actual: number;
 	solicitudes: SolicitudPrecontractual[];
 
 	constructor(
+		public _precontractual_functions_service: PrecontractualFunctionsService,
 		private _precontractual_service: PrecontractualService,
 	) {		
 		let precontractual_pagina = +localStorage.getItem('juridica_pagina');

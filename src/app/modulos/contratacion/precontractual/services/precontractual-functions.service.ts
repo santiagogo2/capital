@@ -95,4 +95,36 @@ export class PrecontractualFunctionsService {
 			return '';
 		}
 	}
+	
+	/**
+	 * Función que valida los estados de los documentos para permitir o no su edición
+	 * @name		validarEstadoDocumento
+	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
+	 * @version		1.0.0
+	 * @access		public
+	 * 
+	 * @param 		{Array<Documentacion>} documentos
+	 * @param 		{number} id_documento
+	 * @param 		{boolean} bandera
+	 * 
+	 * @returns 
+	*/
+	validarEstadoDocumento( documentos: Array<Documentacion>, id_documento: number, bandera: boolean = false): any{
+		let flag = true;
+		let estado: number = null;
+
+		if( documentos && documentos.length > 0 ){
+			documentos.forEach( documento => {
+				if( documento.id_documento == id_documento ) {
+					estado = documento.estado;
+					if( documento.estado == 3 ) {
+						flag = false;
+					}
+				}
+			});
+		}
+
+		if( bandera ) { return estado }
+		return flag;
+	}
 }

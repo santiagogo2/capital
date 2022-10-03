@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 // Modulos
 import { ContratacionRoutingModule } from './contratacion-routing.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 // Componentes
 import { ContratacionComponent } from './contratacion.component';
@@ -17,7 +18,8 @@ import { ContratacionComponent } from './contratacion.component';
 		CommonModule,
 		ContratacionRoutingModule,
 		FormsModule,
-		PipesModule
+		PipesModule,
+		SharedModule
 	]
 })
 export class ContratacionModule { }

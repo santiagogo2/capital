@@ -67,26 +67,50 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody_styles">
-                                <ng-container *ngFor="let documento of solicitud.documentos">
-                                    <tr *ngIf="documento.id_documento != 2 && documento.etapa_contractual == 1">
-                                        <td> {{ clasificarDocumentos( documento.id_documento ) }} </td>
-                                        <td>{{ documento.createdAt | date: 'dd/MM/yyyy' }}</td>
+                                <ng-container *ngFor="let item of solicitud.presupuesto">
+                                    <tr *ngIf="item.tipo_certificado == 1 && item.estado == 2">
+                                        <td>CDP<span class="required">*</span></td>
+                                        <td>{{ item.createdAt | date: 'dd/MM/yyyy' }}</td>
+                                        <td>-</td>
+                                        <td>{{ item.estado | global: 'estados_presupuesto' }}</td>
                                         <td>
-                                            <ng-container *ngIf="documento.fecha_vigencia; else elseTemplate">
-                                                {{ documento.fecha_vigencia | date: 'dd/MM/yyyy' }}
+                                            <button type="button" class="btn btn-info btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( item.documento )"><i class="fa fa-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngFor="let item of global.tipos_documentos">
+                                    <tr *ngIf="(item.tipo_contrato == solicitud.tipo_contrato || !item.tipo_contrato) && item.id <= 28">
+                                        <td>{{ item.value }}<span class="required" *ngIf="item.required && (item.required == solicitud.tipo_contrato || item.required === true)">*</span></td>
+                                        <ng-container *ngFor="let documento of solicitud.documentos">
+                                            <ng-container *ngIf="documento.id_documento == item.id">
+                                                <td>{{ documento.createdAt | date: 'dd/MM/yyyy' }}</td>
+                                                <td>
+                                                    <ng-container *ngIf="documento.fecha_vigencia; else elseTemplate">
+                                                        {{ documento.fecha_vigencia | date: 'dd/MM/yyyy' }}
+                                                    </ng-container>
+                                                    <ng-template #elseTemplate>-</ng-template>
+                                                </td>
+                                                <td>{{ documento.estado | global: 'estados_documentacion' }}</td>
+                                                <td>
+                                                    <span>
+														<button type="button" class="btn btn-info btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( documento.documento )"><i class="fa fa-download"></i></button>
+													</span>
+                                                    <span class="ml-1" *ngIf="!documento_preloader || !validarDocumentosAprovados() || !bandera_disabled">
+														<button type="button" class="btn btn-warning btn-circle btn-sm" title="Editar Estado" (click)="documento_seleccionado=documento" data-toggle="modal" [attr.data-target]=" '#editarEstadoDocumento'"><i class="fa fa-pencil"></i></button>
+													</span>
+                                                </td>
                                             </ng-container>
-                                            <ng-template #elseTemplate>-</ng-template>
-
-                                        </td>
-                                        <td>{{ documento.estado | global: 'estados_documentacion' }}</td>
-                                        <td>
-                                            <span>
-												<button type="button" class="btn btn-info btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( documento.documento )"><i class="fa fa-download"></i></button>
-											</span>
-                                            <span class="ml-1" *ngIf="!documento_preloader || !validarDocumentosAprovados() || !bandera_disabled">
-												<button type="button" class="btn btn-warning btn-circle btn-sm" title="Editar Estado" (click)="documento_seleccionado = documento" data-toggle="modal" [attr.data-target]="'#editarEstadoDocumento'"><i class="fa fa-pencil"></i></button>
-											</span>
-                                        </td>
+                                        </ng-container>
+                                        <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true) === false">
+                                            <td colspan="4">
+                                                <ng-container *ngIf="item.required && (item.required == solicitud.tipo_contrato || item.required === true); else elseTemplate">
+                                                    <i class="fa fa-times" style="color: red; font-size: 1rem"></i>
+                                                </ng-container>
+                                                <ng-template #elseTemplate>
+                                                    -
+                                                </ng-template>
+                                            </td>
+                                        </ng-container>
                                     </tr>
                                 </ng-container>
                             </tbody>
@@ -97,16 +121,16 @@
 
             <!-- Documentos del contrato -->
             <ng-container *ngIf="validarDocumentosAprovados()">
-                <!-- Documento 38 - CRP -->
+                <!-- Documento 35 - CRP -->
                 <div class="form-group" style="margin-bottom: 15px">
                     <div class="col col-sm-12 pl-0 pr-0">
                         <ng-container *ngIf="CRP">
-                            <span style="margin-left: 0 !important" class="btn btn-sm mb-2 d-inline-block" [ngClass]="{ 'btn-danger': CRP.estado == 1, 'btn-success': CRP.estado == 2 }">{{ CRP.estado | global: 'estados_presupuesto' }}</span>
+                            <span style="margin-left: 0 !important" class="btn btn-sm mb-2 d-inline-block" [ngClass]="{ 'btn-danger': CRP.estado==1 , 'btn-success': CRP.estado==2 }">{{ CRP.estado | global: 'estados_presupuesto' }}</span>
                             <textarea name="descripcion" id="descripcion" rows="3" class="form-control inputForm" disabled *ngIf="CRP.estado==1">{{ CRP.descripcion }}</textarea>
                             <textarea name="descripcion" id="descripcion" rows="3" class="form-control inputForm" disabled *ngIf="CRP.estado==2">{{ CRP.motivo }}</textarea>
                             <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="_precontractual_functions_services.descargarDocumento( CRP.documento )" *ngIf="CRP.documento">{{ CRP.documento }}</button>
                         </ng-container>
-                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-warning mt-2 d-block" title="Agregar CDP" data-toggle="modal" [attr.data-target]="'#crearCDPCRPPresupuestoModal'" *ngIf="!CRP"><i class="fa fa-plus"></i> Solicitar CRP</button>
+                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-warning mt-2 d-block" title="Agregar CDP" data-toggle="modal" [attr.data-target]=" '#crearCDPCRPPresupuestoModal'" *ngIf="!CRP"><i class="fa fa-plus"></i> Solicitar CRP</button>
                     </div>
                 </div>
                 <div class="infoNote">
@@ -122,12 +146,13 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody_styles">
-                                <ng-container *ngFor="let item of global.tipos_documentos; let i = index">
-                                    <tr *ngIf="item.id >= 29 && item.id <= 37">
+                                <ng-container *ngFor="let item of global.tipos_documentos; let i=i ndex">
+                                    <tr *ngIf="item.id>= 29 && item.id <= 34">
                                         <td>{{ item.value }}<span class="required" *ngIf="item.required">*</span></td>
                                         <td>
                                             <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true); else elseDocumento">
-                                                <button type="button" class="btn btn-success btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( _precontractual_functions_services.validarDocumento( solicitud, item.id ) )"><i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-success btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( _precontractual_functions_services.validarDocumento(
+                                                        solicitud, item.id ) )"><i class="fa fa-check"></i></button>
                                             </ng-container>
                                             <ng-template #elseDocumento>
                                                 <i *ngIf="item.required; else elseValidarDocumento" class="fa fa-times" style="color: red; font-size: 1rem"></i>
@@ -141,7 +166,7 @@
                     </div>
                 </div>
                 <div class="col col-12 text-right">
-                    <button type="button" data-toggle="modal" [attr.data-target]="'#agregarDocumentoModal'" class="btn btn-info btn-circle btn-lg" title="Agregar Documento"><i class="fa fa-upload"></i></button>
+                    <button type="button" data-toggle="modal" [attr.data-target]=" '#agregarDocumentoModal'" class="btn btn-info btn-circle btn-lg" title="Agregar Documento"><i class="fa fa-upload"></i></button>
                 </div>
             </ng-container>
 
@@ -149,23 +174,23 @@
                 <h3 class="subtitle">Respuesta</h3>
                 <div class="form-body">
                     <div class="form-group">
-                        <div class="col col-sm-12 d-inline-block" [ngClass]="{'col-md-6 d-inline-block': solicitud.estado == 3 || solicitud.fecha_comite_contratacion}">
+                        <div class="col col-sm-12 d-inline-block" [ngClass]="{ 'col-md-6 d-inline-block': solicitud.estado==3 || solicitud.fecha_comite_contratacion}">
                             <label for="estado_solicitud" class="control-label labelForm">Estado Solicitud<span class="required">*</span></label>
                             <select id="estado_solicitud" name="estado_solicitud" class="form-control inputForm custom-select" [ngClass]="{ 'is-invalid': estado_solicitud.invalid }" #estado_solicitud="ngModel" [(ngModel)]="solicitud.estado" [disabled]="bandera_disabled" required>
 								<option value="6" *ngIf="solicitud.fecha_comite_contratacion && !validarDocumentosContractualesRequeridos()">APROBADO</option>
 								<option value="2">ANULADO</option>
 								<option value="4" *ngIf="!solicitud.fecha_comite_contratacion">DEVULETO</option>
-								<option value="3">PENDIENTE</option>
+								<option value="3" *ngIf="solicitud.documentos.length <= 0">PENDIENTE</option>
 								<option value="7" *ngIf="validarDocumentosContractualesRequeridos()">FINALIZADO</option>
 							</select>
                         </div>
-                        <div class="col col-sm-12 col-md-6 d-inline-block" *ngIf="solicitud.estado == 3 || solicitud.fecha_comite_contratacion">
+                        <div class="col col-sm-12 col-md-6 d-inline-block" *ngIf="solicitud.estado==3 || solicitud.fecha_comite_contratacion">
                             <label for="fecha_comite_contratacion" class="control-label labelForm">Fecha de presentación comité de contratación<span class="required">*</span></label>
                             <input type="date" id="fecha_comite_contratacion" name="fecha_comite_contratacion" class="form-control inputForm" [ngClass]="{ 'is-invalid': fecha_comite_contratacion.invalid }" #fecha_comite_contratacion="ngModel" [(ngModel)]="solicitud.fecha_comite_contratacion"
                                 [min]="_global_service.obtenerFechaActual()" [disabled]="bandera_disabled" required>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="solicitud.estado == 2 || solicitud.estado == 4">
+                    <div class="form-group" *ngIf="solicitud.estado==2 || solicitud.estado==4">
                         <div class="col col-12">
                             <label for="observaciones" class="control-label labelForm">Observaciones<span class="required">*</span></label>
                             <textarea name="observaciones" id="observaciones" rows="3" minlength="15" maxlength="100" class="form-control inputForm" [ngClass]="{ 'is-invalid': observaciones.invalid }" #observaciones="ngModel" [(ngModel)]="solicitud.observaciones_juridica" placeholder="Diligencie la observación que tenga en relación con la solicitud"
@@ -174,9 +199,9 @@
                     </div>
                 </div>
 
-                <div class="form-actions ">
+                <div class="form-actions">
                     <div class="col col-sm-12 text-right">
-                        <button type="submit" class="btn btn-success" [disabled]="juridicaForm.invalid" *ngIf="!bandera_disabled"> <i class="fa fa-check "></i> Enviar</button>
+                        <button type="submit" class="btn btn-success" [disabled]="juridicaForm.invalid" *ngIf="!bandera_disabled"> <i class="fa fa-check"></i> Enviar</button>
                         <button type="button" class="btn btn-inverse ml-2" (click)="cancelarSolicitud()">Cancelar</button>
                     </div>
                 </div>
@@ -241,7 +266,7 @@
                             <label for="descripcion" class="control-label labelForm">Seleccione el documento<span class="required">*</span></label>
                             <select id="estado_documento" name="estado_documento" class="form-control inputForm custom-select" [(ngModel)]="documentacion.id_documento">
 								<ng-container *ngFor="let item of global.tipos_documentos">
-									<option *ngIf="item.id >= 29 && item.id <= 37" value="{{ item.id }}">{{ item.value }}</option>
+									<option *ngIf="item.id>= 29 && item.id <= 34" value="{{ item.id }}">{{ item.value }}</option>
 								</ng-container>
 							</select>
                         </div>
@@ -249,7 +274,7 @@
                     <div class="form-group">
                         <div class="col col-sm-12">
                             <label for="descripcion" class="control-label labelForm">Documento adjunto<span class="required">*</span></label>
-                            <input type="file" class="form-control inputForm mt-2" id="documento_2" accept="application/pdf" (change)="documento_a_cargar = $event.target.files[0]" required/>
+                            <input type="file" class="form-control inputForm mt-2" id="documento_2" accept="application/pdf" (change)="documento_a_cargar=$event.target.files[0]" required/>
                         </div>
                     </div>
                 </div>
@@ -286,14 +311,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group" *ngIf="documento_seleccionado.estado == 3">
+                    <div class="form-group" *ngIf="documento_seleccionado.estado==3">
                         <div class="col col-sm-12">
                             <label for="fecha_vigencia" class="control-label labelForm">Fecha de vigencia<span class="required">*</span></label>
                             <input type="date" id="fecha_vigencia" name="fecha_vigencia" class="form-control inputForm" [ngClass]="{ 'is-invalid': fecha_vigencia.invalid }" #fecha_vigencia="ngModel" [(ngModel)]="documento_seleccionado.fecha_vigencia" [min]="_global_service.obtenerFechaActual()"
                                 required>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="documento_seleccionado.estado == 2">
+                    <div class="form-group" *ngIf="documento_seleccionado.estado==2">
                         <div class="col col-sm-12">
                             <label for="observacion" class="control-label labelForm">Observación<span class="required">*</span></label>
                             <textarea name="observacion" id="observacion" rows="3" minlength="15" maxlength="100" class="form-control inputForm" [ngClass]="{ 'is-invalid': observacion.invalid }" #observacion="ngModel" [(ngModel)]="documento_seleccionado.observacion" placeholder="Diligencie la observación que tenga del rechazo del documento"
