@@ -7,40 +7,12 @@
         <i class="bx bx-menu" id="btn"></i>
     </div>
     <ul class="nav_list">
-        <li>
-            <a href="#">
-                <i class="bx bx-grid-alt"></i>
-                <span class="links_name">Dashboard</span>
+        <li *ngFor="let item of modulos">
+            <a [routerLink]="'/' + item.enlace">
+                <i [class]='item.clase'></i>
+                <span class="links_name">{{ item.nombre }}</span>
             </a>
-            <span class="tooltip-sidebar">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class="bx bx-grid-alt"></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip-sidebar">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class="bx bx-grid-alt"></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip-sidebar">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class="bx bx-grid-alt"></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip-sidebar">Dashboard</span>
-        </li>
-        <li>
-            <a href="#">
-                <i class="bx bx-grid-alt"></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip-sidebar">Dashboard</span>
+            <span class="tooltip-sidebar">{{ item.nombre }}</span>
         </li>
     </ul>
     <div class="profile_content">
