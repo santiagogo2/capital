@@ -26,12 +26,14 @@
                                 <div class="dw-user-box">
                                     <div class="u-img"><img src="./assets/images/sin-foto.png" alt="user"></div>
                                     <div class="u-text">
-                                        <h4>Santiago Ramírez Gaitán</h4>
-                                        <p class="text-muted">profesional.desarrollo3@capitalsalud.gov.co</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a></div>
+                                        <h4>{{ usuario.cn }}</h4>
+                                        <p class="text-muted">{{ usuario.mail }}</p>
+                                        <!-- <a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver Perfíl</a> -->
+                                    </div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
+                            <li><a [routerLink]="['/logout', 1]"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 </li>

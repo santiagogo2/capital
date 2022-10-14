@@ -12,10 +12,12 @@ import { AppComponent } from './app.component';
 
 // Servicios
 import { InterceptorService } from './interceptors/interceptor.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		LoginComponent,
 	],
 	imports: [
 		BrowserModule,

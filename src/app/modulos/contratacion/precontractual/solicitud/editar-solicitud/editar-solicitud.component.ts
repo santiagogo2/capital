@@ -203,4 +203,23 @@ export class EditarSolicitudComponent implements OnInit {
 			);
 		}
 	}
+	
+	/**
+	 * Función que se encarga de darle check al input que trae la solicitud
+	 * @name		configurarCheckInput
+	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
+	 * @version		1.0.0
+	 * @access		public
+	*/
+	configurarCheckInput(){
+		for (let i = 0; i < this.global.tipos_contratos.length; i++) {
+			if( this.solicitud.tipo_contrato == this.global.tipos_contratos[i].id ) {
+				let prueba = <HTMLInputElement>document.getElementById(this.global.tipos_contratos[i].value);
+				if( prueba ) {
+					prueba.checked = true;
+				}
+				break;
+			}
+		}
+	}
 }

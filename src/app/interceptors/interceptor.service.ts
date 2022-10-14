@@ -27,14 +27,18 @@ export class InterceptorService implements HttpInterceptor {
 	 * @returns 
 	*/
 	intercept( req: HttpRequest<any>, next: HttpHandler): Observable< HttpEvent<any> > {
+		const token = localStorage.getItem('x-token') ? localStorage.getItem('x-token') : null;
 		const headers = new HttpHeaders({
-			'token-usuario': 'HSADIUDSHAIOHSAD9982713897321'
+			'x-token': token
 		});
-		const req_clone = req.clone({
-			headers
-		});
-
-		return next.handle( req ).pipe(
+		
+		let req_clone = req;
+		if( token ) {
+			req_clone = req.clone({
+				headers
+			});
+		}
+		return next.handle( req_clone ).pipe(
 			catchError( this.manejarError )
 		);
 	}

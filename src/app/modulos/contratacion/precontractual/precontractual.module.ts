@@ -17,8 +17,8 @@ import { VacunacionComponent } from './vacunacion/vacunacion.component';
 import { AprobacionJuridicaComponent } from './juridica/aprobacion-juridica/aprobacion-juridica.component';
 import { PanelJuridicaComponent } from './juridica/panel-juridica/panel-juridica.component';
 import { AgregarDocumentosComponent } from './documentos/agregar-documentos/agregar-documentos.component';
-import { PanelPresupuestoComponent } from './presupuesto/panel-presupuesto/panel-presupuesto.component';
-import { AprobacionPresupuestoComponent } from './presupuesto/aprobacion-presupuesto/aprobacion-presupuesto.component';
+import { PanelFinancieraComponent } from './financiera/panel-financiera/panel-financiera.component';
+import { AprobacionFinancieraComponent } from './financiera/aprobacion-financiera/aprobacion-financiera.component';
 import { PoscontractualComponent } from './juridica/poscontractual/poscontractual.component';
 
 @NgModule({
@@ -31,8 +31,8 @@ import { PoscontractualComponent } from './juridica/poscontractual/poscontractua
 		AprobacionJuridicaComponent,
 		PanelJuridicaComponent,
 		AgregarDocumentosComponent,
-		PanelPresupuestoComponent,
-		AprobacionPresupuestoComponent,
+		PanelFinancieraComponent,
+		AprobacionFinancieraComponent,
 		PoscontractualComponent,
 	],
 	imports: [

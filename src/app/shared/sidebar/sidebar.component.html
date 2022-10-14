@@ -2,7 +2,7 @@
     <div class="logo_content" id="logo_content">
         <div class="logo">
             <i class="bx bxl-c-plus-plus"></i>
-            <div class="logo_name">Nombre</div>
+            <div class="logo_name">Contratos CS</div>
         </div>
         <i class="bx bx-menu" id="btn"></i>
     </div>
@@ -20,11 +20,11 @@
             <div class="profile_details">
                 <!-- <img src="profile.jpg" alt=""> -->
                 <div class="name_job">
-                    <div class="name">Santiago Ramirez</div>
-                    <div class="job">Profesional Universitario</div>
+                    <div class="name">{{ usuario.cn }}</div>
+                    <div class="job">{{ usuario.description }}</div>
                 </div>
             </div>
-            <i class="bx bx-log-out" id="log_out"></i>
+            <i class="bx bx-log-out" id="log_out" [routerLink]="['/logout', 1]"></i>
         </div>
     </div>
 </div>

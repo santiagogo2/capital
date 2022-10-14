@@ -55,7 +55,7 @@
                     <div class="col d-inline-block" [ngClass]="{ 'col-sm-6': bandera_disabled, 'col-sm-12': !bandera_disabled }">
                         <label for="correo_electronico" class="control-label labelForm">Correo electrónico<span class="required">*</span></label>
                         <input type="text" id="correo_electronico" name="correo_electronico" maxlength="255" class="form-control inputForm" [ngClass]="{ 'is-invalid': correo_electronico.invalid }" #correo_electronico="ngModel" [(ngModel)]="solicitud.correo_electronico" placeholder="ejemplo@capitalsalud.gov.co"
-                            pattern="[a-z0-9._%+-]+@capitalsalud.gov.co" required [disabled]="bandera_disabled">
+                            pattern="[a-zA-Z0-9._%+-]+@capitalsalud.gov.co" required [disabled]="bandera_disabled">
                     </div>
                     <div class="col col-sm-6 d-inline-block" *ngIf="bandera_disabled">
                         <label class="control-label labelForm">Seleccione el típo de contrato<span class="required">*</span></label>
@@ -83,10 +83,10 @@
                 </div>
                 <div class="form-group" *ngIf="solicitud.tipo_contrato && !bandera_disabled">
                     <div class="col col-sm-12" *ngIf="solicitud.tipo_contrato == 1">
-                        <a href="#" class="btn waves-effect waves-light btn-rounded btn-sm btn-info">F62 – LJ Formato Informe Previo Administrativo para Comité de Contratación</a>
+                        <a href="https://red.capitalsalud.gov.co/wp-content/uploads/2021/08/F62-LJ.docx" target="_blank" class="btn waves-effect waves-light btn-rounded btn-sm btn-info">F62 – LJ Formato Informe Previo Administrativo para Comité de Contratación</a>
                     </div>
                     <div class="col col-sm-12" *ngIf="solicitud.tipo_contrato == 2">
-                        <a href="#" class="btn waves-effect waves-light btn-rounded btn-sm btn-info">F64 – LJ Formato Informe Previo Asistencial para Comité de Contratación</a>
+                        <a href="https://red.capitalsalud.gov.co/wp-content/uploads/2021/08/F64-LJ.docx" target="_blank" class="btn waves-effect waves-light btn-rounded btn-sm btn-info">F64 – LJ Formato Informe Previo Asistencial para Comité de Contratación</a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -116,4 +116,5 @@
             <app-agregar-documentos [solicitud]="solicitud"></app-agregar-documentos>
         </ng-container>
     </div>
+    {{configurarCheckInput()}}
 </div>

@@ -68,7 +68,9 @@ export class NuevaSolicitudComponent implements OnInit {
 		this.configurarInformacionInicial();
 		this._router.navigate(['./contratacion/precontractual/panel-solicitudes']);
 	}
-	
+
+	configurarCheckInput() {}
+
 	/**
 	 * Función que configura la información inicial para el funcionamiento de la vista
 	 * @name		configurarInformacionInicial

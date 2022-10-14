@@ -102,10 +102,13 @@ export class AgregarDocumentosComponent implements OnInit {
 									title: res.message,
 									showConfirmButton: true,
 								});
-	
+								
+								this.documento_a_cargar = null;
+								this.configurarInformacionInicial();
 								this.obtenerSolicitud( this.solicitud.id );
 							}
 						);
+						(<HTMLInputElement>document.getElementById('documento_adjunto')).value = '';
 					}
 				})
 				.catch( error => {

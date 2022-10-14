@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Modulo } from '../../models/models.index';
-import { ModulosService } from '../../services/services.index';
+
+// Servicios
+import { ModulosService, UserService } from '../../services/services.index';
 
 @Component({
 	selector: 'app-sidebar',
@@ -9,10 +11,14 @@ import { ModulosService } from '../../services/services.index';
 })
 export class SidebarComponent implements OnInit {
 	modulos: Modulo[];
+	usuario: any;
 
 	constructor(
-		private _modulos_service: ModulosService
-	) { }
+		private _modulos_service: ModulosService,
+		private _user_service: UserService,
+	) {
+		this.usuario = this._user_service.obtenerIdentidadUsuarioLocal();
+	}
 	
 	ngOnInit(): void {
 		this.obtenerSolicitudesActivas();
@@ -39,7 +45,20 @@ export class SidebarComponent implements OnInit {
 	obtenerSolicitudesActivas() {
 		this._modulos_service.obtenerSolicitudesActivas().subscribe(
 			res => {
-				this.modulos = res.modulos;
+				const modulos = res.modulos;
+				const grupos = this._user_service.obtenerPermisosUsuario();
+				let modulos_activos = [];
+
+				grupos.forEach(grupo => {
+					for (let i = 0; i < modulos.length; i++) {
+						if( modulos[i].grupo == grupo.cn ) {
+							modulos_activos.push( modulos[i] );
+							break;
+						}
+					}
+				});
+
+				this.modulos = modulos_activos;
 			}
 		);
 	}

@@ -5,12 +5,24 @@ import { ExtraOptions, RouterModule, Routes } from "@angular/router";
 import { ModulosRoutingModule } from './modulos/modulos-routing.module';
 
 // Componentes
+import { LoginComponent } from "./login/login.component";
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
+import { LoginGuard, IdentityGuard } from './guards/guards.index';
 
 const appRoutes: Routes = [
 	{
+		path: 'login',
+		component: LoginComponent,
+		canActivate: [ LoginGuard ]
+	},
+	{
+		path: 'logout/:sure',
+		component: LoginComponent
+	},
+	{
 		path: '**',
 		component: NopagefoundComponent,
+		canActivate: [ IdentityGuard ]
 	}
 ];
 

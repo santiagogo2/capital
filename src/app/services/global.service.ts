@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export var global = {
-	url: 'http://localhost:4202/api/',
+	// url: 'http://localhost:4202/api/',
+	url: 'http://10.201.2.93:4202/api/',
 	appName: 'NOMBRE',
 	salarioMinimo: 1000000,
 	error_message: 'Error. Por favor revisar su conexión a internet y recargar la página',

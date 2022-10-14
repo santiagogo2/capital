@@ -3,3 +3,4 @@ export { FileUploadService } from './file-upload.service';
 export { global } from './global.service';
 export { GlobalService } from './global.service';
 export { ModulosService } from './modulos.service';
+export { UserService } from './user.service';
