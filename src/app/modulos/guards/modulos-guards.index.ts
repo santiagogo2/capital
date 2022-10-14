@@ -1,0 +1,1 @@
+export { ContratacionGuard } from './contratacion.guard';

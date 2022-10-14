@@ -1,0 +1,52 @@
+<div class="text-center" *ngIf="!bandera_inicial">
+    <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="col-12 pr-0 pl-0" *ngIf="bandera_inicial">
+    <div class="backLink col col-sm-12">
+        <a class="col-sm-12" routerLink="../">Regresar</a>
+    </div>
+    <div class="col col-12 mt-2" *ngIf="mensaje_inicial">
+        <div class="alert alert-warning" role="alert">
+            {{ mensaje_inicial }}
+        </div>
+    </div>
+    <div class="card-body tableContainer" *ngIf="presupuestos && presupuestos.length > 0">
+        <div class="table-responsive tableContainerAll">
+            <div class="paginationControls" *ngIf="presupuestos && presupuestos.length > items_por_pagina">
+                <pagination-controls (pageChange)="cambiarPagina($event)" previousLabel="Anterior" nextLabel="Siguiente" maxSize="4">
+                </pagination-controls>
+            </div>
+            <table class="table table-bordered">
+                <thead class="thead_styles">
+                    <tr>
+                        <th>ID</th>
+                        <th>Área solicitante</th>
+                        <th>Descripción de la solicitud</th>
+                        <th>Fecha solicitud</th>
+                        <th>Estado</th>
+                        <th>Fecha respuesta</th>
+                        <th>Tipo de Certificado</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody_styles">
+                    <tr *ngFor="let presupuesto of presupuestos | paginate: {itemsPerPage: items_por_pagina, currentPage: pagina_actual}">
+                        <td>{{ presupuesto.solicitud_precontractual.id }}</td>
+                        <td>{{ presupuesto.solicitud_precontractual.area_solicitante | global: 'areas_contratacion' }}</td>
+                        <td>{{ presupuesto.solicitud_precontractual.descripcion_solicitud }}</td>
+                        <td>{{ presupuesto.createdAt | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ presupuesto.estado | global: 'estados_presupuesto' }}</td>
+                        <td *ngIf="presupuesto.solicitud_precontractual.fecha_respuesta">{{ presupuesto.solicitud_precontractual.fecha_respuesta | date: 'dd/MM/yyyy' }}</td>
+                        <td *ngIf="!presupuesto.solicitud_precontractual.fecha_respuesta">-</td>
+                        <td>{{ presupuesto.tipo_certificado | global: 'tipos_certificados' }}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info btn-circle btn-sm" title="Ver Más" [routerLink]="['../aprobacion-financiera/', presupuesto.id]"><i class="fa fa-eye"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
