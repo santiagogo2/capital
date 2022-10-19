@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
 				this._user_service.obtenerIdentidadUsuario().subscribe(
 					res => {
 						localStorage.setItem('x-usuario', JSON.stringify(res.usuario.user));
-						const expirationtime = new Date( 1665471207 );
+						const expirationtime = new Date( new Date().getTime() + ((res.usuario.exp - res.usuario.iat)*1000) );
 						localStorage.setItem('x-expiration', expirationtime.toString());
 						loginForm.reset();
 						this._router.navigate(['/inicio']);
