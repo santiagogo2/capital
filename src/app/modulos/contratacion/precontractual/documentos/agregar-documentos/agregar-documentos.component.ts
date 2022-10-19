@@ -108,7 +108,6 @@ export class AgregarDocumentosComponent implements OnInit {
 								this.obtenerSolicitud( this.solicitud.id );
 							}
 						);
-						(<HTMLInputElement>document.getElementById('documento_adjunto')).value = '';
 					}
 				})
 				.catch( error => {
@@ -138,6 +137,7 @@ export class AgregarDocumentosComponent implements OnInit {
 							this.obtenerSolicitud( this.solicitud.id );
 						}
 					);
+					(<HTMLInputElement>document.getElementById('documento_adjunto')).value = '';
 				}
 			})
 			.catch( error => {
