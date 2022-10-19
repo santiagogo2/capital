@@ -76,13 +76,33 @@ export class InterceptorService implements HttpInterceptor {
 			}
 		}
 		if( bandera_swal ) {
-			Swal.fire({
-				position: 'center',
-				icon: 'error',
-				title: 'Error',
-				html: message,
-				showConfirmButton: true,
-			});
+			if( !error.error.code ) {
+				Swal.fire({
+					position: 'center',
+					icon: 'error',
+					title: 'Error',
+					html: message,
+					showConfirmButton: true,
+				});
+			} else {
+				if( error.error.code == 500 ) {
+					Swal.fire({
+						position: 'center',
+						icon: 'error',
+						title: 'Error',
+						html: message,
+						showConfirmButton: true,
+					});
+				} else {
+					Swal.fire({
+						position: 'center',
+						icon: 'warning',
+						title: 'Alerta',
+						html: message,
+						showConfirmButton: true,
+					});
+				}
+			}
 		}
 
 		return throwError(message);
