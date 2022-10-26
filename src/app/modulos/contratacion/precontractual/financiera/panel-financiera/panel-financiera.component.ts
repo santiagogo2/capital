@@ -46,7 +46,7 @@ export class PanelFinancieraComponent implements OnInit {
 	 * @access		public
 	*/
 	obtenerInformacionInicial() {
-		Promise.all([ this.obtenerSolicitudesActivas()])		
+		Promise.all([ this.obtenerSolicitudes()])		
 			.then( responses => {
 				this.presupuestos = responses[0];
 				if( this.presupuestos.length <= 0 ) {
@@ -61,15 +61,15 @@ export class PanelFinancieraComponent implements OnInit {
 	}
 	
 	/**
-	 * Promesa que consulta el servicio para obtener las solicitudes activas para el área de presupuesto
-	 * @name		obtenerSolicitudesActivas
+	 * Promesa que consulta el servicio para obtener todas las solicitudes para el área de presupuesto
+	 * @name		obtenerSolicitudes
 	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
 	 * @version		1.0.0
 	 * @access		public
 	*/
-	obtenerSolicitudesActivas(): Promise<Presupuesto[]> {
+	obtenerSolicitudes(): Promise<Presupuesto[]> {
 		return new Promise((resolve, reject) => {
-			this._presupuesto_service.obtenerSolicitudesActivas().subscribe(
+			this._presupuesto_service.obtenerSolicitudes().subscribe(
 				res => {
 					resolve( res.presupuestos );
 				},

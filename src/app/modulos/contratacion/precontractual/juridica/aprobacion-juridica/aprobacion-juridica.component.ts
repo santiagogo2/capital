@@ -332,7 +332,7 @@ export class AprobacionJuridicaComponent implements OnInit {
 		if( this.solicitud.documentos && this.solicitud.documentos.length > 0 ) {
 			const documentos_requeridos = [];
 			this.global.tipos_documentos.forEach( item => {
-				if( item.required && ( item.required == true || item.required == this.solicitud.tipo_contrato ) && item.id <= 28 ) {
+				if( item.required && ( item.required === true || item.required == this.solicitud.tipo_contrato ) && item.id <= 28 ) {
 					if( item.tipo_contrato ) {
 						if( item.tipo_contrato == this.solicitud.tipo_contrato ) {
 							documentos_requeridos.push( item );	
@@ -357,7 +357,6 @@ export class AprobacionJuridicaComponent implements OnInit {
 	 * @returns 
 	*/
 	validarDocumentosAprovados() {
-		console.log(this.solicitud)
 		if( this.solicitud.documentos && this.solicitud.documentos.length > 0 ) {
 			let bandera = true;
 			const documentos_requeridos = this.validarDocumentacionCompleta();

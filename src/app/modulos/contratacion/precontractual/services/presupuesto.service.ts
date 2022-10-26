@@ -52,6 +52,19 @@ export class PresupuestoService {
     }
 
 	/**
+	 * Servicio que obtiene todas las solicitudes para el área de presupuesto
+	 * @name		obtenerSolicitudes
+	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
+	 * @version		1.0.0
+	 * @access		public
+	 * 
+	 * @returns 
+	*/
+	obtenerSolicitudes(): Observable<any> {
+		return this.http.get( `${this.url}contratacion/presupuesto/adicionales/obtenerSolicitudes` );
+	}
+
+	/**
 	 * Servicio que obtiene las solicitudes activas para el área de presupuesto
 	 * @name		obtenerSolicitudesActivas
 	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
