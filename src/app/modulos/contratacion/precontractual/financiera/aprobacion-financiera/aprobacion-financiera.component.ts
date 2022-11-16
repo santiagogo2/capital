@@ -86,9 +86,9 @@ export class AprobacionFinancieraComponent implements OnInit {
 					let segundo_apellido = this.presupuesto.solicitud_precontractual.segundo_apellido ? this.presupuesto.solicitud_precontractual.segundo_apellido + ' ' : '';
 					this.nombre_completo = this.presupuesto.solicitud_precontractual.primer_nombre + ' ' + segundo_nombre + this.presupuesto.solicitud_precontractual.primer_apellido + ' ' + segundo_apellido;
 					this.bandera_inicial = true;
-					if( this.presupuesto.documentos && this.presupuesto.documentos.length > 0 ) {
-						this.presupuesto.documentos.forEach( documento => {
-							if( documento.id_documento == 2 ) {
+					if( this.presupuesto.solicitud_precontractual.documentos && this.presupuesto.solicitud_precontractual.documentos.length > 0 ) {
+						this.presupuesto.solicitud_precontractual.documentos.forEach( documento => {
+							if( (this.presupuesto.tipo_certificado == 1 && documento.id_documento == 2) || (this.presupuesto.tipo_certificado == 2 && documento.id_documento == 35) ) {
 								this.documento_solicitud = documento.documento;					
 							}
 						});

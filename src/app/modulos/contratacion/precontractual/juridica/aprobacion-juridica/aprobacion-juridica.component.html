@@ -84,7 +84,7 @@
                                         <ng-container *ngFor="let documento of solicitud.documentos">
                                             <ng-container *ngIf="documento.id_documento == item.id">
                                                 <td>{{ documento.createdAt | date: 'dd/MM/yyyy' }}</td>
-                                                <td>
+                                                <td [ngClass]="{'bad': _precontractual_functions_services.validarVencimientoFechasDocumentos( documento.fecha_vigencia, 15 )}">
                                                     <ng-container *ngIf="documento.fecha_vigencia; else elseTemplate">
                                                         {{ documento.fecha_vigencia | date: 'dd/MM/yyyy' }}
                                                     </ng-container>
@@ -120,19 +120,8 @@
             </ng-container>
 
             <!-- Documentos del contrato -->
-            <ng-container *ngIf="validarDocumentosAprovados()">
-                <!-- Documento 35 - CRP -->
-                <div class="form-group" style="margin-bottom: 15px">
-                    <div class="col col-sm-12 pl-0 pr-0">
-                        <ng-container *ngIf="CRP">
-                            <span style="margin-left: 0 !important" class="btn btn-sm mb-2 d-inline-block" [ngClass]="{ 'btn-danger': CRP.estado==1 , 'btn-success': CRP.estado==2 }">{{ CRP.estado | global: 'estados_presupuesto' }}</span>
-                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control inputForm" disabled *ngIf="CRP.estado==1">{{ CRP.descripcion }}</textarea>
-                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control inputForm" disabled *ngIf="CRP.estado==2">{{ CRP.motivo }}</textarea>
-                            <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="_precontractual_functions_services.descargarDocumento( CRP.documento )" *ngIf="CRP.documento">{{ CRP.documento }}</button>
-                        </ng-container>
-                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-warning mt-2 d-block" title="Agregar CDP" data-toggle="modal" [attr.data-target]=" '#crearCDPCRPPresupuestoModal'" *ngIf="!CRP"><i class="fa fa-plus"></i> Solicitar CRP</button>
-                    </div>
-                </div>
+            <!-- *ngIf="validarDocumentosAprovados()" -->
+            <ng-container>
                 <div class="infoNote">
                     <small>Los documentos marcados con el símbolo <i class="fa fa-times" style="color: red; font-size: 1rem"></i> son obligatorios para finalizar la solicitud</small>
                 </div>
@@ -147,7 +136,7 @@
                             </thead>
                             <tbody class="tbody_styles">
                                 <ng-container *ngFor="let item of global.tipos_documentos; let i=i ndex">
-                                    <tr *ngIf="item.id>= 29 && item.id <= 34">
+                                    <tr *ngIf="(item.id>= 29 && item.id <= 34) || (item.id == 45 && solicitud.tipo_contrato == 1)">
                                         <td>{{ item.value }}<span class="required" *ngIf="item.required">*</span></td>
                                         <td>
                                             <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true); else elseDocumento">
@@ -163,6 +152,18 @@
                                 </ng-container>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <!-- Documento 35 - CRP -->
+                <div class="form-group" style="margin-bottom: 15px">
+                    <div class="col col-sm-12 pl-0 pr-0">
+                        <ng-container *ngIf="CRP">
+                            <span style="margin-left: 0 !important" class="btn btn-sm mb-2 d-inline-block" [ngClass]="{ 'btn-danger': CRP.estado==1 , 'btn-success': CRP.estado==2 }">{{ CRP.estado | global: 'estados_presupuesto' }}</span>
+                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control inputForm" disabled *ngIf="CRP.estado==1">{{ CRP.descripcion }}</textarea>
+                            <textarea name="descripcion" id="descripcion" rows="3" class="form-control inputForm" disabled *ngIf="CRP.estado==2">{{ CRP.motivo }}</textarea>
+                            <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="_precontractual_functions_services.descargarDocumento( CRP.documento )" *ngIf="CRP.documento">{{ CRP.documento }}</button>
+                        </ng-container>
+                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-warning mt-2 d-block" title="Agregar CDP" data-toggle="modal" [attr.data-target]=" '#crearCDPCRPPresupuestoModal'" *ngIf="!CRP"><i class="fa fa-plus"></i> Solicitar CRP</button>
                     </div>
                 </div>
                 <div class="col col-12 text-right">
@@ -190,6 +191,13 @@
                                 [min]="_global_service.obtenerFechaActual()" [disabled]="bandera_disabled" required>
                         </div>
                     </div>
+                    <div class="form-group" *ngIf="solicitud.estado == 6">
+                        <div class="col col-12">
+                            <label for="acta_comite" class="control-label labelForm">Acta Comité de Contratación<span class="required">*</span></label>
+                            <input type="file" class="form-control inputForm" id="acta_comite" accept="application/pdf" (change)="cambiarDocumento( $event.target.files[0] )" required />
+                            <button *ngIf="_precontractual_functions_services.validarDocumento( solicitud, 44, true )" type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="_precontractual_functions_services.descargarDocumento( _precontractual_functions_services.validarDocumento( solicitud, 44 ) )">Acta Comité de Contratación</button>
+                        </div>
+                    </div>
                     <div class="form-group" *ngIf="solicitud.estado==2 || solicitud.estado==4">
                         <div class="col col-12">
                             <label for="observaciones" class="control-label labelForm">Observaciones<span class="required">*</span></label>
@@ -201,7 +209,7 @@
 
                 <div class="form-actions">
                     <div class="col col-sm-12 text-right">
-                        <button type="submit" class="btn btn-success" [disabled]="juridicaForm.invalid" *ngIf="!bandera_disabled"> <i class="fa fa-check"></i> Enviar</button>
+                        <button type="submit" class="btn btn-success" [disabled]="juridicaForm.invalid || (!acta_comite && solicitud.estado == 6)" *ngIf="!bandera_disabled"> <i class="fa fa-check"></i> Enviar</button>
                         <button type="button" class="btn btn-inverse ml-2" (click)="cancelarSolicitud()">Cancelar</button>
                     </div>
                 </div>

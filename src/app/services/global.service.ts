@@ -94,6 +94,7 @@ export var global = {
 		{ id: 32, value: 'Designación de Supervisión', required: true },
 		{ id: 33, value: 'Publicación SECOP I Estado Celebrado', required: true },
 		{ id: 34, value: 'Anexos', required: false },
+		{ id: 45, value: 'Actas de Inicio' },
 		{ id: 35, value: 'Certificado de Registro Presupuestal CRP', required: true },
 		
 		{ id: 36, value: 'Informes de Supervisión', required: true },
@@ -104,6 +105,8 @@ export var global = {
 		{ id: 41, value: 'Certificado DAF', required: true },
 		{ id: 42, value: 'Certificado DOP', required: true },
 		{ id: 43, value: 'Acta de Liquidación o de Recibido a Satisfacción', required: true },
+
+		{ id: 44, value: 'Acta Comité de Contratación', required: true },
 	]
 }
 

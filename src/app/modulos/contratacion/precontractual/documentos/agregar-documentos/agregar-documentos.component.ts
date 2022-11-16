@@ -7,7 +7,7 @@ import { Documentacion, Presupuesto, SolicitudPrecontractual } from '../../model
 
 // Servicios
 import { FileUploadService, global, GlobalService } from '../../../../../services/services.index';
-import { DocumentacionService, PrecontractualService, PresupuestoService } from '../../services/precontractual.services.index';
+import { DocumentacionService, PrecontractualService, PresupuestoService, PrecontractualFunctionsService } from '../../services/precontractual.services.index';
 
 @Component({
 	selector: 'app-agregar-documentos',
@@ -24,11 +24,13 @@ export class AgregarDocumentosComponent implements OnInit {
 	documento_a_cargar: File;
 	tipos_documentos: any;
 	observacion: string;
+	documento_cargado: boolean;
 
 	constructor(
 		private _documentacion_service: DocumentacionService,
 		private _file_upload_service: FileUploadService,
 		private _global_service: GlobalService,
+		public precontractual_functions_service: PrecontractualFunctionsService,
 		private _precontractual_service: PrecontractualService,
 		private _presupuesto_service: PresupuestoService,
 		private _router: Router,
@@ -62,7 +64,9 @@ export class AgregarDocumentosComponent implements OnInit {
 	 * 
 	 * @returns 
 	*/
-	cargarDocumentoRequerido( documento: File, id_documento: number ) {		
+	cargarDocumentoRequerido( documento: File, id_documento: number ) {
+		this.documento_cargado = false;
+
 		if( this.solicitud.documentos && this.solicitud.documentos.length > 0 ) {
 			let flag = false;
 			let documentacion_id = null;
@@ -104,8 +108,8 @@ export class AgregarDocumentosComponent implements OnInit {
 								});
 								
 								this.documento_a_cargar = null;
-								this.configurarInformacionInicial();
 								this.obtenerSolicitud( this.solicitud.id );
+								this.documento_cargado = true;
 							}
 						);
 					}
@@ -135,6 +139,7 @@ export class AgregarDocumentosComponent implements OnInit {
 							});
 
 							this.obtenerSolicitud( this.solicitud.id );
+							this.documento_cargado = true;
 						}
 					);
 					(<HTMLInputElement>document.getElementById('documento_adjunto')).value = '';
@@ -161,7 +166,7 @@ export class AgregarDocumentosComponent implements OnInit {
 				if( element.tipo_certificado == 1 ) { this.CDP = element; }
 			});
 		}
-		this.presupuesto = this.CDP ? this.CDP : new Presupuesto( null, this.solicitud.id, null, null, null, 1, null, null, null );
+		this.presupuesto = this.presupuesto ? this.presupuesto : new Presupuesto( null, this.solicitud.id, null, null, null, 1, null, null, null );
 		this.documentos_cargados = this.solicitud.estado == 6 ? true : false;
 		this.documento_a_cargar = null;
 		this.formaterTiposDocumento();
@@ -213,7 +218,6 @@ export class AgregarDocumentosComponent implements OnInit {
 				this.obtenerSolicitud( this.solicitud.id );				
 			}
 		);
-
 	}
 	
 	/**

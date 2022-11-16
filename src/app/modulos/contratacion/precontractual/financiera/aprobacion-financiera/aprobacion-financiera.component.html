@@ -5,7 +5,7 @@
 </div>
 <div class="col-lg-12 pr-0 pl-0" *ngIf="bandera_inicial">
     <div class="backLink col col-sm-12">
-        <a class="col-sm-12" routerLink="/contratacion/precontractual/panel-juridica">Regresar</a>
+        <a class="col-sm-12" routerLink="/contratacion/precontractual/panel-financiera">Regresar</a>
     </div>
     <div class="formContainer">
         <div class="col col-12 mt-2" *ngIf="mensaje_inicial">
@@ -40,10 +40,16 @@
                         <input type="text" id="tipo_contrato" name="tipo_contrato" class="form-control inputForm" value="{{ presupuesto.solicitud_precontractual.tipo_contrato | global: 'tipos_contratos' }}" disabled>
                     </div>
                 </div>
-                <h3 class="subtitle">Descripción</h3>
+                <div class="form-group">
+                    <div class="col col-12 d-inline-block">
+                        <label for="descripcion_contrato" class="control-label labelForm">Descripción</label>
+                        <textarea name="descripcion_contrato" id="descripcion_contrato" rows="3" class="form-control inputForm" disabled>{{ presupuesto.solicitud_precontractual.descripcion_solicitud }}</textarea>
+                    </div>
+                </div>
+                <h3 class="subtitle">Descripción Solicitud</h3>
                 <div class="form-group">
                     <div class="col col-sm-12">
-                        <textarea name="descripcion_solicitud" id="descripcion_solicitud" rows="3" class="form-control inputForm" disabled>{{ presupuesto.solicitud_precontractual.descripcion_solicitud }}</textarea>
+                        <textarea name="descripcion_solicitud" id="descripcion_solicitud" rows="3" class="form-control inputForm" disabled>{{ presupuesto.descripcion }}</textarea>
                     </div>
                     <div class="col col-12">
                         <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="descargarDocumento( documento_solicitud )" *ngIf="documento_solicitud">{{ documento_solicitud }}</button>

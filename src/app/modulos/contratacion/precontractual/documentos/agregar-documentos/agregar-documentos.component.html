@@ -83,7 +83,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col col-sm-12">
-                                <label for="descripcion" class="control-label labelForm">Documento adjunto</label>
+                                <label for="descripcion" class="control-label labelForm">Documento adjunto<span class="required">*</span></label>
                                 <input type="file" class="form-control inputForm mt-2" id="documento_2" accept="application/pdf" (change)="cargarDocumentoRequerido($event.target.files[0], 2)" required/>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
 
                     <div class="modal-footer">
                         <div class="col col-sm-12 text-right">
-                            <button type="submit" class="btn btn-success" [disabled]="datosCDPForm.invalid" (click)="crearCDPCRPPresupuesto( datosCDPForm )" data-dismiss="modal"> <i class="fa fa-check"></i> Solicitar</button>
+                            <button type="submit" class="btn btn-success" [disabled]="datosCDPForm.invalid || !documento_cargado" (click)="crearCDPCRPPresupuesto( datosCDPForm )" data-dismiss="modal"> <i class="fa fa-check"></i> Solicitar</button>
                             <button type="button" class="btn btn-inverse ml-2" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>

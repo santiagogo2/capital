@@ -24,7 +24,7 @@ export class PrecontractualService {
 	
 	/**
 	 * Servicio que actualiza el estado de la solicitud precontractual enviada por la url
-	 * @name		actualizarSolicitudPrecontractual
+	 * @name		actualizarEstadoSolicitudPrecontractual
 	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
 	 * @version		1.0.0
 	 * @access		public
