@@ -293,7 +293,6 @@ export class AprobacionJuridicaComponent implements OnInit {
 			Promise.all([ this._precontractual_functions_services.obtenerSolicitud( id )] )
 				.then( responses => {
 					this.solicitud = responses[0];
-					console.log(this.solicitud)
 					this.bandera_disabled = this.solicitud.estado == 7 ? true : false;
 					this.configurarInformacionInicial();
 					this.validarDocumentacionCompleta();

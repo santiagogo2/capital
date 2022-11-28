@@ -84,7 +84,7 @@
                                         <ng-container *ngFor="let documento of solicitud.documentos">
                                             <ng-container *ngIf="documento.id_documento == item.id">
                                                 <td>{{ documento.createdAt | date: 'dd/MM/yyyy' }}</td>
-                                                <td [ngClass]="{'bad': _precontractual_functions_services.validarVencimientoFechasDocumentos( documento.fecha_vigencia, 15 )}">
+                                                <td [ngClass]="{'bad': _precontractual_functions_services.validarVencimientoFechasDocumentos( documento.fecha_vigencia, 30 )}">
                                                     <ng-container *ngIf="documento.fecha_vigencia; else elseTemplate">
                                                         {{ documento.fecha_vigencia | date: 'dd/MM/yyyy' }}
                                                     </ng-container>

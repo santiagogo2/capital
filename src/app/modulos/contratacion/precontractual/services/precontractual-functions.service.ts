@@ -247,10 +247,11 @@ export class PrecontractualFunctionsService {
 	 * @returns 
 	*/
 	validarVencimientoFechasDocumentos( vigencia: string, dias: number ) {
+		if( !vigencia ) return false;
 		const fecha_actual = new Date();
 		const fecha_vigencia = new Date( vigencia );
 		const dias_milisegundos = dias * 86400000;
-		let resultado = fecha_actual.getTime() - fecha_vigencia.getTime();
+		let resultado = fecha_vigencia.getTime() - fecha_actual.getTime();
 
 		if( resultado < dias_milisegundos ) {
 			return true;
