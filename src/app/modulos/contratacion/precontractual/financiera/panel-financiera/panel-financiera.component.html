@@ -35,7 +35,7 @@
                     <tr *ngFor="let presupuesto of presupuestos | paginate: {itemsPerPage: items_por_pagina, currentPage: pagina_actual}">
                         <td>{{ presupuesto.id }}</td>
                         <td>{{ presupuesto.solicitud_precontractual.area_solicitante | global: 'areas_contratacion' }}</td>
-                        <td>{{ presupuesto.solicitud_precontractual.descripcion_solicitud }}</td>
+                        <td>{{ presupuesto.descripcion }}</td>
                         <td>{{ presupuesto.createdAt | date: 'dd/MM/yyyy' }}</td>
                         <td>{{ presupuesto.estado | global: 'estados_presupuesto' }}</td>
                         <td *ngIf="presupuesto.solicitud_precontractual.fecha_respuesta">{{ presupuesto.solicitud_precontractual.fecha_respuesta | date: 'dd/MM/yyyy' }}</td>
