@@ -16,6 +16,7 @@ import { PrecontractualFunctionsService, PresupuestoService, PrecontractualServi
 })
 export class AprobacionJuridicaComponent implements OnInit {
 	acta_comite: File;
+	bandera_acta_comite: boolean;
 	bandera_disabled: boolean;
 	bandera_inicial: boolean;
 	documento_adjunto: File;
@@ -245,6 +246,7 @@ export class AprobacionJuridicaComponent implements OnInit {
 		this.documento_seleccionado = new Documentacion( null, this.solicitud.id, null, null, 2, null, null, null, null, null, null );
 		const documento_resultante = this.solicitud.documentos.find( documento => documento.id_documento == 44 );
 		this.acta_comite = documento_resultante ? documento_resultante.documento : null;
+		this.bandera_acta_comite = documento_resultante ? false : true;
 	}
 	
 	/**
@@ -325,7 +327,7 @@ export class AprobacionJuridicaComponent implements OnInit {
 	async onSubmit( juridicaForm ) {
 		let actualizar_resultado: boolean = false;
 
-		if( this.acta_comite ) {
+		if( this.acta_comite && this.bandera_acta_comite ) {
 			const resultado: any = await this._precontractual_functions_services.cargarDocumentoRequerido( this.acta_comite, this.solicitud.id, 44, 0, this.solicitud.documentos );
 
 			if( resultado ) {
@@ -335,7 +337,7 @@ export class AprobacionJuridicaComponent implements OnInit {
 			actualizar_resultado = true;
 		}
 
-		if( actualizar_resultado ) {
+		if( actualizar_resultado || this.bandera_acta_comite ) {
 			this._precontractual_service.actualizarSolicitudPrecontractual( this.solicitud ).subscribe(
 				res => {
 					Swal.fire({
