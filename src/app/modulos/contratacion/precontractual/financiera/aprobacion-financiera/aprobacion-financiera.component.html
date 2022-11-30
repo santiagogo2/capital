@@ -52,7 +52,7 @@
                         <textarea name="descripcion_solicitud" id="descripcion_solicitud" rows="3" class="form-control inputForm" disabled>{{ presupuesto.descripcion }}</textarea>
                     </div>
                     <div class="col col-12">
-                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="descargarDocumento( documento_solicitud )" *ngIf="documento_solicitud">{{ documento_solicitud }}</button>
+                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="descargarDocumento( presupuesto.documento )" *ngIf="presupuesto.documento">{{ presupuesto.documento }}</button>
                     </div>
                 </div>
             </div>
