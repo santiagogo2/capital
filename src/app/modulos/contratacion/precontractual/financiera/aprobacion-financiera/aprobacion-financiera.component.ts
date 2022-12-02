@@ -82,7 +82,6 @@ export class AprobacionFinancieraComponent implements OnInit {
 			Promise.all([ this.obtenerSolicitudPresupuesto( this.presupuesto_id )] )
 				.then( responses => {
 					this.presupuesto = responses[0];
-					console.log(this.presupuesto)
 					let segundo_nombre = this.presupuesto.solicitud_precontractual.segundo_nombre ? this.presupuesto.solicitud_precontractual.segundo_nombre + ' ' : '';
 					let segundo_apellido = this.presupuesto.solicitud_precontractual.segundo_apellido ? this.presupuesto.solicitud_precontractual.segundo_apellido + ' ' : '';
 					this.nombre_completo = this.presupuesto.solicitud_precontractual.primer_nombre + ' ' + segundo_nombre + this.presupuesto.solicitud_precontractual.primer_apellido + ' ' + segundo_apellido;
