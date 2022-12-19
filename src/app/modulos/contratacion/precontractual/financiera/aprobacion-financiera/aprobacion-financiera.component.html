@@ -51,8 +51,9 @@
                     <div class="col col-sm-12">
                         <textarea name="descripcion_solicitud" id="descripcion_solicitud" rows="3" class="form-control inputForm" disabled>{{ presupuesto.descripcion }}</textarea>
                     </div>
-                    <div class="col col-12">
-                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="descargarDocumento( presupuesto.documento )" *ngIf="presupuesto.documento">{{ presupuesto.documento }}</button>
+                    <div class="col col-12" *ngIf="precontractual_functions_services.validarDocumento( presupuesto.solicitud_precontractual, id_documento, true)">
+                        <button type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="precontractual_functions_services.descargarDocumento( precontractual_functions_services.validarDocumento(
+							presupuesto.solicitud_precontractual, id_documento ) )">Documento Adjunto</button>
                     </div>
                 </div>
             </div>

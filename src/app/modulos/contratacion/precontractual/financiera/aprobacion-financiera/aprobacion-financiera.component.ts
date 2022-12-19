@@ -7,7 +7,7 @@ import { Presupuesto } from '../../models/Presupuesto';
 
 // Servicios
 import { global, GlobalService, FileUploadService } from 'src/app/services/services.index';
-import { PresupuestoService } from '../../services/precontractual.services.index';
+import { PrecontractualFunctionsService, PresupuestoService } from '../../services/precontractual.services.index';
 
 @Component({
 	selector: 'app-aprobacion-financiera',
@@ -19,6 +19,7 @@ export class AprobacionFinancieraComponent implements OnInit {
 	documento_adjunto: File;
 	documento_solicitud: string;
 	global: any;
+	id_documento: number;
 	mensaje_inicial: string;
 	nombre_completo: string;
 	presupuesto: Presupuesto;
@@ -26,6 +27,7 @@ export class AprobacionFinancieraComponent implements OnInit {
 
 	constructor(
 		private _file_upload_service: FileUploadService,
+		public precontractual_functions_services: PrecontractualFunctionsService,
 		private _presupuesto_service: PresupuestoService,
 		private _route: ActivatedRoute,
 		private _router: Router,
@@ -82,6 +84,7 @@ export class AprobacionFinancieraComponent implements OnInit {
 			Promise.all([ this.obtenerSolicitudPresupuesto( this.presupuesto_id )] )
 				.then( responses => {
 					this.presupuesto = responses[0];
+					console.log(this.presupuesto)
 					let segundo_nombre = this.presupuesto.solicitud_precontractual.segundo_nombre ? this.presupuesto.solicitud_precontractual.segundo_nombre + ' ' : '';
 					let segundo_apellido = this.presupuesto.solicitud_precontractual.segundo_apellido ? this.presupuesto.solicitud_precontractual.segundo_apellido + ' ' : '';
 					this.nombre_completo = this.presupuesto.solicitud_precontractual.primer_nombre + ' ' + segundo_nombre + this.presupuesto.solicitud_precontractual.primer_apellido + ' ' + segundo_apellido;
@@ -92,6 +95,7 @@ export class AprobacionFinancieraComponent implements OnInit {
 								this.documento_solicitud = documento.documento;					
 							}
 						});
+						this.id_documento = this.presupuesto.tipo_certificado == 1 ? 2 : 35;
 					}
 				})
 				.catch( error => {
