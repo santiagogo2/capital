@@ -131,13 +131,24 @@
                             <thead class="thead_styles">
                                 <tr>
                                     <th>Documento Adjunto</th>
+                                    <th>Vigencia</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody class="tbody_styles">
-                                <ng-container *ngFor="let item of global.tipos_documentos; let i=i ndex">
+                                <ng-container *ngFor="let item of global.tipos_documentos; let i = index">
                                     <tr *ngIf="(item.id>= 29 && item.id <= 34) || (item.id == 45 && solicitud.tipo_contrato == 1)">
                                         <td>{{ item.value }}<span class="required" *ngIf="item.required">*</span></td>
+                                        <ng-container *ngFor="let documento of solicitud.documentos">
+                                            <ng-container *ngIf="documento.id_documento == item.id">
+                                                <td [ngClass]="{'bad': _precontractual_functions_services.validarVencimientoFechasDocumentos( documento.fecha_vigencia, 30 )}">
+                                                    <ng-container *ngIf="documento.fecha_vigencia; else elseTemplate">
+                                                        {{ documento.fecha_vigencia | date: 'dd/MM/yyyy' }}
+                                                    </ng-container>
+                                                    <ng-template #elseTemplate>-</ng-template>
+                                                </td>
+                                            </ng-container>
+                                        </ng-container>
                                         <td>
                                             <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true); else elseDocumento">
                                                 <button type="button" class="btn btn-success btn-circle btn-sm" title="Descargar Documento" (click)="_precontractual_functions_services.descargarDocumento( _precontractual_functions_services.validarDocumento(
@@ -191,13 +202,6 @@
                                 [min]="_global_service.obtenerFechaActual()" [disabled]="bandera_disabled" required>
                         </div>
                     </div>
-                    <div class="form-group" *ngIf="solicitud.estado == 6">
-                        <div class="col col-12">
-                            <label for="acta_comite" class="control-label labelForm">Acta Comité de Contratación<span class="required">*</span></label>
-                            <input *ngIf="!_precontractual_functions_services.validarDocumento( solicitud, 44, true )" type="file" class="form-control inputForm" id="acta_comite" accept="application/pdf" (change)="cambiarDocumento( $event.target.files[0] )" required />
-                            <button *ngIf="_precontractual_functions_services.validarDocumento( solicitud, 44, true )" type="button" class="btn btn-waves-effect waves-light btn-rounded btn-sm btn-success mt-2 d-block" (click)="_precontractual_functions_services.descargarDocumento( _precontractual_functions_services.validarDocumento( solicitud, 44 ) )">Acta Comité de Contratación</button>
-                        </div>
-                    </div>
                     <div class="form-group" *ngIf="solicitud.estado==2 || solicitud.estado==4">
                         <div class="col col-12">
                             <label for="observaciones" class="control-label labelForm">Observaciones<span class="required">*</span></label>
@@ -209,7 +213,7 @@
 
                 <div class="form-actions">
                     <div class="col col-sm-12 text-right">
-                        <button type="submit" class="btn btn-success" [disabled]="juridicaForm.invalid || (!acta_comite && solicitud.estado == 6)" *ngIf="!bandera_disabled"> <i class="fa fa-check"></i> Enviar</button>
+                        <button type="submit" class="btn btn-success" [disabled]="juridicaForm.invalid" *ngIf="!bandera_disabled"> <i class="fa fa-check"></i> Enviar</button>
                         <button type="button" class="btn btn-inverse ml-2" (click)="cancelarSolicitud()">Cancelar</button>
                     </div>
                 </div>
@@ -275,11 +279,18 @@
                     <div class="form-group">
                         <div class="col col-sm-12">
                             <label for="descripcion" class="control-label labelForm">Seleccione el documento<span class="required">*</span></label>
-                            <select id="estado_documento" name="estado_documento" class="form-control inputForm custom-select" [(ngModel)]="documentacion.id_documento">
+                            <select id="estado_documento" name="estado_documento" #estado_documento="ngModel" class="form-control inputForm custom-select" [ngClass]="{ 'is-invalid': estado_documento.invalid }" [(ngModel)]="documentacion.id_documento" required>
 								<ng-container *ngFor="let item of global.tipos_documentos">
 									<option *ngIf="item.id>= 29 && item.id <= 34" value="{{ item.id }}">{{ item.value }}</option>
 								</ng-container>
 							</select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col col-sm-12">
+                            <label for="fecha_vigencia" class="control-label labelForm">Fecha de vigencia<span class="required">*</span></label>
+                            <input type="date" id="fecha_vigencia" name="fecha_vigencia" class="form-control inputForm" [ngClass]="{ 'is-invalid': fecha_vigencia.invalid }" #fecha_vigencia="ngModel" [(ngModel)]="documentacion.fecha_vigencia" [min]="_global_service.obtenerFechaActual()"
+                                required>
                         </div>
                     </div>
                     <div class="form-group">

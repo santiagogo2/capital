@@ -15,8 +15,6 @@ import { PrecontractualFunctionsService, PresupuestoService, PrecontractualServi
 	styles: []
 })
 export class AprobacionJuridicaComponent implements OnInit {
-	acta_comite: File;
-	bandera_acta_comite: boolean;
 	bandera_disabled: boolean;
 	bandera_inicial: boolean;
 	documento_adjunto: File;
@@ -91,21 +89,6 @@ export class AprobacionJuridicaComponent implements OnInit {
 	*/
 	cancelarSolicitud() {
 		this._router.navigate(['./contratacion/precontractual/panel-juridica']);
-	}
-	
-	/**
-	 * Función que le asigna a una varibale el documento adjunto que ha seleccionado el usuario
-	 * @name		cambiarDocumento
-	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
-	 * @version		1.0.0
-	 * @access		public
-	 * 
-	 * @param		{File} file
-	 * 
-	 * @returns 
-	*/
-	cambiarDocumento( file: File ) {
-		this.acta_comite = file;
 	}
 	
 	/**
@@ -244,9 +227,6 @@ export class AprobacionJuridicaComponent implements OnInit {
 		this.presupuesto = this.CRP ? this.CRP : new Presupuesto( null, this.solicitud.id, null, null, null, 2, null, null, null, null, null, null );
 		this.documentacion = new Documentacion( null, this.solicitud.id, null, null, 2, null, null, null, null, null, null );
 		this.documento_seleccionado = new Documentacion( null, this.solicitud.id, null, null, 2, null, null, null, null, null, null );
-		const documento_resultante = this.solicitud.documentos.find( documento => documento.id_documento == 44 );
-		this.acta_comite = documento_resultante ? documento_resultante.documento : null;
-		this.bandera_acta_comite = documento_resultante ? false : true;
 	}
 	
 	/**
@@ -325,32 +305,18 @@ export class AprobacionJuridicaComponent implements OnInit {
 	 * @returns 
 	*/
 	async onSubmit( juridicaForm ) {
-		let actualizar_resultado: boolean = false;
-
-		if( this.acta_comite && this.bandera_acta_comite ) {
-			const resultado: any = await this._precontractual_functions_services.cargarDocumentoRequerido( this.acta_comite, this.solicitud.id, 44, 0, this.solicitud.documentos );
-
-			if( resultado ) {
-				actualizar_resultado = true;			
+		this._precontractual_service.actualizarSolicitudPrecontractual( this.solicitud ).subscribe(
+			res => {
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: res.message,
+					showConfirmButton: true,
+				});
+				juridicaForm.reset();
+				this.cancelarSolicitud();
 			}
-		} else {
-			actualizar_resultado = true;
-		}
-
-		if( actualizar_resultado || this.bandera_acta_comite ) {
-			this._precontractual_service.actualizarSolicitudPrecontractual( this.solicitud ).subscribe(
-				res => {
-					Swal.fire({
-						position: 'center',
-						icon: 'success',
-						title: res.message,
-						showConfirmButton: true,
-					});
-					juridicaForm.reset();
-					this.cancelarSolicitud();
-				}
-			);	
-		}
+		);
 	}
 	
 	/**
