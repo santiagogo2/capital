@@ -6,13 +6,14 @@ import { FormsModule } from '@angular/forms';
 // Modulos
 import { AppRoutingModule } from './app-routing.module';
 import { ModulosModule } from './modulos/modulos.module';
+import { SharedModule } from './shared/shared.module';
 
 // Componentes
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 // Servicios
 import { InterceptorService } from './interceptors/interceptor.service';
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,7 @@ import { LoginComponent } from './login/login.component';
 		HttpClientModule,
 		ModulosModule,
 		AppRoutingModule,
+		SharedModule,
 	],
 	providers: [
 		{

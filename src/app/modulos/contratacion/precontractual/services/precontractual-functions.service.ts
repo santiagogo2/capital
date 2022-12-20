@@ -192,7 +192,6 @@ export class PrecontractualFunctionsService {
 					return nombre_documento;
 				}
 			}
-
 		}
 		
 		if( bandera ) {

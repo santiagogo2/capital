@@ -1,8 +1,5 @@
-<div class="text-center" *ngIf="!bandera_inicial">
-    <div class="spinner-grow text-info" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div>
+<app-loader [bandera_carga]="!bandera_inicial"></app-loader>
+
 <div class="col-lg-12 pr-0 pl-0" *ngIf="bandera_inicial">
     <div class="backLink col col-sm-12">
         <a class="col-sm-12" routerLink="/contratacion/precontractual/panel-juridica">Regresar</a>
@@ -137,7 +134,7 @@
                             </thead>
                             <tbody class="tbody_styles">
                                 <ng-container *ngFor="let item of global.tipos_documentos; let i = index">
-                                    <tr *ngIf="(item.id>= 29 && item.id <= 34) || (item.id == 45 && solicitud.tipo_contrato == 1)">
+                                    <tr *ngIf="(item.id >= 29 && item.id <= 34) || (item.id == 45 && solicitud.tipo_contrato == 1)">
                                         <td>{{ item.value }}<span class="required" *ngIf="item.required">*</span></td>
                                         <ng-container *ngFor="let documento of solicitud.documentos">
                                             <ng-container *ngIf="documento.id_documento == item.id">
@@ -148,6 +145,9 @@
                                                     <ng-template #elseTemplate>-</ng-template>
                                                 </td>
                                             </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="validarExistenciaDocumento( solicitud.documentos, item.id )">
+                                            <td>-</td>
                                         </ng-container>
                                         <td>
                                             <ng-container *ngIf="_precontractual_functions_services.validarDocumento( solicitud, item.id, true); else elseDocumento">
@@ -281,7 +281,7 @@
                             <label for="descripcion" class="control-label labelForm">Seleccione el documento<span class="required">*</span></label>
                             <select id="estado_documento" name="estado_documento" #estado_documento="ngModel" class="form-control inputForm custom-select" [ngClass]="{ 'is-invalid': estado_documento.invalid }" [(ngModel)]="documentacion.id_documento" required>
 								<ng-container *ngFor="let item of global.tipos_documentos">
-									<option *ngIf="item.id>= 29 && item.id <= 34" value="{{ item.id }}">{{ item.value }}</option>
+									<option *ngIf="(item.id >= 29 && item.id <= 34) || (item.id == 45 && solicitud.tipo_contrato == 1)" value="{{ item.id }}">{{ item.value }}</option>
 								</ng-container>
 							</select>
                         </div>

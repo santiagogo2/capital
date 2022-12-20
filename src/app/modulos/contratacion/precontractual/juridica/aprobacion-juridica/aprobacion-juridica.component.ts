@@ -17,19 +17,20 @@ import { PrecontractualFunctionsService, PresupuestoService, PrecontractualServi
 export class AprobacionJuridicaComponent implements OnInit {
 	bandera_disabled: boolean;
 	bandera_inicial: boolean;
+	bandera_documentos: boolean;
+	CRP: Presupuesto;
+	documentacion: Documentacion;
+	documento_a_cargar: File;
 	documento_adjunto: File;
+	documento_preloader: boolean;
+	documento_seleccionado: Documentacion;
 	global: any;
 	mensaje_inicial: string;
 	nombre_completo: string;
 	observaciones_juridica: ObservacionesJuridica;
+	presupuesto: Presupuesto;
 	solicitud: SolicitudPrecontractual;
 	solicitud_id: number;
-	documento_preloader: boolean;
-	documentacion: Documentacion;
-	documento_seleccionado: Documentacion;
-	documento_a_cargar: File;
-	presupuesto: Presupuesto;
-	CRP: Presupuesto;
 
 	constructor(
 		private _documentacion_service: DocumentacionService,
@@ -419,5 +420,29 @@ export class AprobacionJuridicaComponent implements OnInit {
 		});
 
 		return bandera;
+	}
+	
+	/**
+	 * Función que valida si no hay documentos existentes con el id dentro de la solicitud
+	 * @name		validarExistenciaDocumento
+	 * @author		Santiago Ramirez Gaitan <santiagooo42@gmail.com>
+	 * @version		1.0.0
+	 * @access		public
+	 * 
+	 * @param		{ Array<Documentacion> } documentacion
+	 * @param		{ number } item_id
+	 * 
+	 * @returns 
+	*/
+	validarExistenciaDocumento( documentacion: Array<Documentacion>, item_id: number ) {
+		let flag = true;
+
+		documentacion.forEach( documento => {
+			if( documento.id_documento == item_id ) {
+				flag = false;
+			}						
+		});
+
+		return flag;
 	}
 }

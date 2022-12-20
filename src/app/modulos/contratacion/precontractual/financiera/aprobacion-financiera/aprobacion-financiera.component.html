@@ -1,8 +1,5 @@
-<div class="text-center" *ngIf="!bandera_inicial">
-    <div class="spinner-grow text-info" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div>
+<app-loader [bandera_carga]="!bandera_inicial"></app-loader>
+
 <div class="col-lg-12 pr-0 pl-0" *ngIf="bandera_inicial">
     <div class="backLink col col-sm-12">
         <a class="col-sm-12" routerLink="/contratacion/precontractual/panel-financiera">Regresar</a>

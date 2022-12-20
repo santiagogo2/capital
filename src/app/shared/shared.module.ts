@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { CardComponent } from './card/card.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
 	imports: [
@@ -17,17 +18,19 @@ import { CardComponent } from './card/card.component';
 	],
 	declarations: [
 		BreadcrumbsComponent,
+		CardComponent,
 		FooterComponent,
 		HeaderComponent,
+		LoaderComponent,
 		NopagefoundComponent,
 		SidebarComponent,
-		CardComponent,
 	],
 	exports: [
 		BreadcrumbsComponent,
 		CardComponent,
 		FooterComponent,
 		HeaderComponent,
+		LoaderComponent,
 		NopagefoundComponent,
 		SidebarComponent,
 	]

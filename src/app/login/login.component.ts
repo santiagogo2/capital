@@ -17,16 +17,19 @@ interface Credenciales {
 export class LoginComponent implements OnInit {
 	capital_loader: boolean;
 	credenciales: Credenciales;
+	recordarme_checkbox: boolean;
 
 	constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
 		private _user_service: UserService,
 	) {
+		let nombre_usuario = localStorage.getItem('nombre_usuario') ? localStorage.getItem('nombre_usuario') : null;
 		this.credenciales = {
-			nombre_usuario: null,
+			nombre_usuario: nombre_usuario,
 			password: null,
 		}
+		this.recordarme_checkbox = localStorage.getItem('recuerdame') == '1' ? true : false;
 	}
 
 	ngOnInit(): void {
@@ -47,7 +50,9 @@ export class LoginComponent implements OnInit {
 			const logout = +params['sure'];
 
 			if (logout === 1) {
-				localStorage.clear();
+				localStorage.removeItem('x-token');
+				localStorage.removeItem('x-usuario');
+				localStorage.removeItem('x-expiration');
 
 				// Redirección al inicio
 				this._router.navigate(['/login']);
@@ -76,6 +81,13 @@ export class LoginComponent implements OnInit {
 						localStorage.setItem('x-usuario', JSON.stringify(res.usuario.user));
 						const expirationtime = new Date( new Date().getTime() + ((res.usuario.exp - res.usuario.iat)*1000) );
 						localStorage.setItem('x-expiration', expirationtime.toString());
+						let recuerdame = this.recordarme_checkbox ? '1' : '0';
+						localStorage.setItem( 'recuerdame', recuerdame );
+						if( this.recordarme_checkbox ) {
+							localStorage.setItem('nombre_usuario', this.credenciales.nombre_usuario);
+						} else {
+							localStorage.setItem('nombre_usuario', '');
+						}
 						loginForm.reset();
 						this._router.navigate(['/inicio']);
 						this.capital_loader = false;

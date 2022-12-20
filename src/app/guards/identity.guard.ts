@@ -19,7 +19,6 @@ export class IdentityGuard implements CanActivate {
 		if (identity) {
 			let x_expiration = new Date(localStorage.getItem('x-expiration'));
 			let fecha_actual = new Date();
-			console.log(x_expiration, fecha_actual)
 			if( fecha_actual <= x_expiration ) {
 				return true;
 			} else {
